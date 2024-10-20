@@ -77,29 +77,48 @@ bool SellerAuth::registerSeller(
 }
 
 
-bool SellerAuth::login(sqlite3 *db, const std::string &username, const std::string_view &password) const {
-    std::string sqlSelect = "SELECT password FROM sellers WHERE username = ?;";
+bool SellerAuth::login(sqlite3 *db, const std::string &username, const std::string &password) const {
+    std::string sqlSelect = "SELECT password_hash FROM sellers WHERE username = ?;";
     sqlite3_stmt *stmt;
 
+    // Подготовка SQL-запроса
     if (sqlite3_prepare_v2(db, sqlSelect.c_str(), -1, &stmt, nullptr) != SQLITE_OK) {
-        std::cerr << "Ошибка при подготовке SQL-запроса: " << sqlite3_errmsg(db) << std::endl;
+        qDebug() << "Ошибка при подготовке SQL-запроса: " << sqlite3_errmsg(db);
+        QMessageBox::critical(nullptr, "Ошибка", "Ошибка при подготовке SQL-запроса.");
         return false;
     }
 
+    // Привязка параметра username к SQL-запросу
     sqlite3_bind_text(stmt, 1, username.c_str(), -1, SQLITE_STATIC);
 
     bool loginSuccess = false;
-    if (sqlite3_step(stmt) == SQLITE_ROW) {
-        std::string storedPassword = reinterpret_cast<const char *>(sqlite3_column_text(stmt, 0));
 
-        if (storedPassword == password) {
-            std::cout << "Вход выполнен успешно!" << std::endl;
-            loginSuccess = true;
+    // Выполнение запроса и проверка результата
+    int stepResult = sqlite3_step(stmt);
+    if (stepResult == SQLITE_ROW) {
+        const char *storedPassword = reinterpret_cast<const char *>(sqlite3_column_text(stmt, 0));
+        if (storedPassword) {
+            qDebug() << "Извлеченный пароль: " << storedPassword;
+            if (std::string(storedPassword) == password) {
+                qDebug() << "Вход выполнен успешно!";
+                loginSuccess = true;
+            } else {
+                qDebug() << "Неправильный пароль!";
+                QMessageBox::warning(nullptr, "Ошибка", "Неправильный пароль!");
+            }
+        } else {
+            qDebug() << "Ошибка: пароль не найден!";
+            QMessageBox::warning(nullptr, "Ошибка", "Пароль не найден!");
         }
+    } else if (stepResult == SQLITE_DONE) {
+        qDebug() << "Пользователь с таким именем не найден.";
+        QMessageBox::warning(nullptr, "Ошибка", "Пользователь не найден!");
     } else {
-        std::cerr << "Пользователь не найден или произошла ошибка: " << sqlite3_errmsg(db) << std::endl;
+        qDebug() << "Ошибка при выполнении запроса: " << sqlite3_errmsg(db);
+        QMessageBox::warning(nullptr, "Ошибка", "Ошибка при выполнении запроса.");
     }
 
+    // Освобождение ресурсов
     sqlite3_finalize(stmt);
     return loginSuccess;
 }

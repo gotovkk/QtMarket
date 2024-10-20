@@ -71,34 +71,38 @@ void MainWindow::on_loginButton_clicked() {
     std::string stdLogin = login.toStdString();
     std::string stdPassword = password.toStdString();
 
-    // Проверка на пустые строки
     if (stdLogin.empty() || stdPassword.empty()) {
         QMessageBox::warning(this, "Ошибка", "Логин и пароль не могут быть пустыми.");
         return;
     }
 
-    // Попытка входа
     if (buyerAuth.login(db, stdLogin, stdPassword)) {
         buyerMenu->show();
         this->close();
     }
 }
 
-
 void MainWindow::on_loginSellerButton_clicked() {
+
     QString login = ui->lineEditLogin->text();
     QString password = ui->lineEditPassword->text();
 
+    // Преобразование в std::string
     std::string stdLogin = login.toStdString();
     std::string stdPassword = password.toStdString();
 
+    // Проверка на пустые поля
+    if (stdLogin.empty() || stdPassword.empty()) {
+        QMessageBox::warning(this, "Ошибка", "Логин и пароль не могут быть пустыми.");
+        return;
+    }
 
+    // Вход через SellerAuth
     if (sellerAuth.login(db, stdLogin, stdPassword)) {
-        sellerMenu->show();
-        this->close();
+        sellerMenu->show(); // Открыть меню продавца
+        this->close(); // Закрыть текущее окно входа
     } else {
-        ui->labelErrorMessage->setText("Неправильный логин или пароль. Попробуйте снова.");
-        ui->labelErrorMessage->setVisible(true);
+        QMessageBox::warning(this, "Ошибка", "Неправильный логин или пароль. Попробуйте снова.");
     }
 }
 
