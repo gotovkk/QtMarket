@@ -1,4 +1,5 @@
 #pragma once
+
 #include <QWidget>
 #include <QTimer>
 #include <QMainWindow>
@@ -28,22 +29,26 @@ Q_OBJECT
 
 public:
     explicit RegisterSeller(QWidget *parent = nullptr);
+
     ~RegisterSeller();
 
 private slots:
+
     void on_backButton_clicked();
+
     void on_registerButton_clicked();
 
 signals:
-    void regSellerWindow();
 
+    void regSellerWindow();
 
 private:
     Ui::RegisterSeller *ui;
     DatabaseLoader databaseLoader;
     Storage storage;
-    sqlite3* db;
+    sqlite3 *db;
     SellerAuth sellerAuth;
+
     void setupDatabase();
 
 };

@@ -159,46 +159,6 @@
      <height>501</height>
     </rect>
    </property>
-   <widget class="QPushButton" name="categoryButton_2">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>241</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="toolTip">
-     <string>Category</string>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">    QPushButton {
-        background-color: transparent;
-        color: white;
-        border: 1px solid #2e2e2e;
-        border-radius: 8px;
-        padding: 10px 20px;
-    }
-    QPushButton:hover {
-        border-color: #4e4e4e;
-    }
-    QPushButton:pressed {
-        background-color: #1e1e1e;
-}</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="icon">
-     <iconset theme="QIcon::ThemeIcon::FormatJustifyLeft"/>
-    </property>
-    <property name="iconSize">
-     <size>
-      <width>39</width>
-      <height>39</height>
-     </size>
-    </property>
-   </widget>
    <widget class="QPushButton" name="categoryButton_3">
     <property name="geometry">
      <rect>
@@ -256,22 +216,6 @@
     <hint type="destinationlabel">
      <x>53</x>
      <y>41</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>categoryButton_3</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>categoryButton_2</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>27</x>
-     <y>43</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>47</x>
-     <y>49</y>
     </hint>
    </hints>
   </connection>

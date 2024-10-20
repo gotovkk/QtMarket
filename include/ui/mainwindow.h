@@ -6,6 +6,7 @@
 #include "sellermenu.h"
 #include "buyermenu.h"
 #include "../../source/auth/SellerAuth.h"
+#include "../../source/auth/BuyerAuth.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -33,9 +34,6 @@ namespace Ui {
 
         void on_loginButton_clicked();
 
-        void on_lineEditLogin_editingFinished();
-
-        void on_lineEditPassword_editingFinished();
         signals:
 
     private:
@@ -46,6 +44,9 @@ namespace Ui {
         SellerMenu *backToFirstWin;
         SellerMenu *sellerMenu;
         SellerAuth sellerAuth;
+        BuyerAuth buyerAuth;
         sqlite3* db;
+        void setupDatabase();
+
 
     };

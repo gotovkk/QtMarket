@@ -63,6 +63,8 @@ add_executable(QtHydraMarket
         source/menu/registerseller.cpp
         source/menu/registerseller.ui
         include/ui/registerseller.h
+        source/auth/BuyerAuth.cpp
+        source/auth/BuyerAuth.h
 
 )
 target_link_libraries(QtHydraMarket
