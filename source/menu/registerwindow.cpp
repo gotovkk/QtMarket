@@ -24,3 +24,4 @@ void RegistrationWindow::on_sellerRegButton_clicked() {
     regSellerMenu->show();
     this->close();
 }
+

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>600</height>
+    <width>404</width>
+    <height>608</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -106,7 +106,7 @@
     <string/>
    </property>
    <property name="maxLength">
-    <number>16</number>
+    <number>32</number>
    </property>
    <property name="echoMode">
     <enum>QLineEdit::EchoMode::Normal</enum>
@@ -190,11 +190,11 @@
     <string>   Логин</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEditPassword_2">
+  <widget class="QLineEdit" name="lineEditPassword2">
    <property name="geometry">
     <rect>
      <x>60</x>
-     <y>290</y>
+     <y>350</y>
      <width>291</width>
      <height>51</height>
     </rect>
@@ -229,11 +229,11 @@
     <string>   Подтвердите пароль</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEditPassword_4">
+  <widget class="QLineEdit" name="lineEditPassword">
    <property name="geometry">
     <rect>
      <x>60</x>
-     <y>350</y>
+     <y>290</y>
      <width>291</width>
      <height>51</height>
     </rect>

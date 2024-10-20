@@ -7,10 +7,12 @@
 #include <QPixmap>
 #include <QLabel>
 #include <QDialog>
+#include <QMessageBox>
 #include <memory>
 #include "../../source/database/DatabaseLoader.h"
 #include "../Storage.h"
 #include "../../source/management/ProductManagement.h"
+#include "../../source/auth/SellerAuth.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -30,7 +32,7 @@ public:
 
 private slots:
     void on_backButton_clicked();
-
+    void on_registerButton_clicked();
 
 signals:
     void regSellerWindow();
@@ -41,6 +43,8 @@ private:
     DatabaseLoader databaseLoader;
     Storage storage;
     sqlite3* db;
+    SellerAuth sellerAuth;
+    void setupDatabase();
 
 };
 
