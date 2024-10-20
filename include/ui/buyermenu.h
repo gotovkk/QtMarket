@@ -1,27 +1,25 @@
 #pragma once
+
 #include <QWidget>
-#include <QMainWindow>
 #include <QDebug>
-#include <QString>
+#include <QVBoxLayout>
+#include <QScrollArea>
 #include <QPixmap>
 #include <QLabel>
-#include <QDialog>
-#include <memory>
-
-
-QT_BEGIN_NAMESPACE
+#include "../../source/database/DatabaseLoader.h"
+#include "../Product.h"
+#include "productitemwidget.h"
 
 namespace Ui {
     class BuyerMenu;
 }
-QT_END_NAMESPACE
-
 
 class BuyerMenu : public QWidget {
 Q_OBJECT
 
 public:
     explicit BuyerMenu(QWidget *parent = nullptr);
+    void loadProducts(sqlite3* db);
     ~BuyerMenu();
 
 private slots:
@@ -32,5 +30,9 @@ signals:
 
 private:
     Ui::BuyerMenu *ui;
-};
+    QVBoxLayout *layout;
+    sqlite3* db;
 
+    void setupDatabase();
+
+};

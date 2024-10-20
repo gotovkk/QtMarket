@@ -50,7 +50,6 @@ bool BuyerAuth::registerBuyer(
     }
     sqlite3_finalize(stmt);
 
-    // Вставка нового покупателя в таблицу
     std::string sqlInsert = "INSERT INTO buyers (name, password_hash, email) VALUES (?, ?, ?);";
 
     if (sqlite3_prepare_v2(db, sqlInsert.c_str(), -1, &stmt, nullptr) == SQLITE_OK) {

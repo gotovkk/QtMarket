@@ -81,19 +81,16 @@ bool SellerAuth::login(sqlite3 *db, const std::string &username, const std::stri
     std::string sqlSelect = "SELECT password_hash FROM sellers WHERE username = ?;";
     sqlite3_stmt *stmt;
 
-    // Подготовка SQL-запроса
     if (sqlite3_prepare_v2(db, sqlSelect.c_str(), -1, &stmt, nullptr) != SQLITE_OK) {
         qDebug() << "Ошибка при подготовке SQL-запроса: " << sqlite3_errmsg(db);
         QMessageBox::critical(nullptr, "Ошибка", "Ошибка при подготовке SQL-запроса.");
         return false;
     }
 
-    // Привязка параметра username к SQL-запросу
     sqlite3_bind_text(stmt, 1, username.c_str(), -1, SQLITE_STATIC);
 
     bool loginSuccess = false;
 
-    // Выполнение запроса и проверка результата
     int stepResult = sqlite3_step(stmt);
     if (stepResult == SQLITE_ROW) {
         const char *storedPassword = reinterpret_cast<const char *>(sqlite3_column_text(stmt, 0));
@@ -118,7 +115,6 @@ bool SellerAuth::login(sqlite3 *db, const std::string &username, const std::stri
         QMessageBox::warning(nullptr, "Ошибка", "Ошибка при выполнении запроса.");
     }
 
-    // Освобождение ресурсов
     sqlite3_finalize(stmt);
     return loginSuccess;
 }

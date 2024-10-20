@@ -87,20 +87,17 @@ void MainWindow::on_loginSellerButton_clicked() {
     QString login = ui->lineEditLogin->text();
     QString password = ui->lineEditPassword->text();
 
-    // Преобразование в std::string
     std::string stdLogin = login.toStdString();
     std::string stdPassword = password.toStdString();
 
-    // Проверка на пустые поля
     if (stdLogin.empty() || stdPassword.empty()) {
         QMessageBox::warning(this, "Ошибка", "Логин и пароль не могут быть пустыми.");
         return;
     }
 
-    // Вход через SellerAuth
     if (sellerAuth.login(db, stdLogin, stdPassword)) {
-        sellerMenu->show(); // Открыть меню продавца
-        this->close(); // Закрыть текущее окно входа
+        sellerMenu->show();
+        this->close();
     } else {
         QMessageBox::warning(this, "Ошибка", "Неправильный логин или пароль. Попробуйте снова.");
     }

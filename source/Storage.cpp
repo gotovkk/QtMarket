@@ -10,16 +10,12 @@ void Storage::allProductsList() const
         product->printInfo();
     }
     cout << "----------------------" << endl;
-
 }
-
-
 
 void showProducts(const Storage& storage) {
     cout << "Список предметов:" << endl;
     storage.allProductsList();
 }
-
 
 void Storage::findLowStockProducts(Storage& storage) const {
     int limit;

@@ -4,6 +4,7 @@
 #include <QMessageBox>
 #include <QDebug>
 
+
 class BuyerAuth {
 public:
     bool registerBuyer(sqlite3 *db,

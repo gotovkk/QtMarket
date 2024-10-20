@@ -9,14 +9,14 @@ class Product {
     friend bool operator==(const Product& lhs, const Product& rhs);
 
 private:
-    int id;  // ID продукта
+    int id;
     std::string name;
     std::string description;
     double price;
     int amount;
     int seller_id;
     int category_id;
-    std::string added_date; // Дата добавления продукта
+    std::string added_date;
 
 public:
     Product(int id, const std::string& name, const std::string& description, double price, int amount, int seller_id,
