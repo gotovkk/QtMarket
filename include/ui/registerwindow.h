@@ -7,6 +7,7 @@
 #include <QLabel>
 #include <QDialog>
 #include <memory>
+#include "registerseller.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -25,9 +26,12 @@ QT_END_NAMESPACE
         explicit RegistrationWindow(QWidget *parent = nullptr);
 
         ~RegistrationWindow();
-
+private slots:
+        void on_sellerRegButton_clicked();
 
     private:
         Ui::RegistrationWindow *ui;
+        RegisterSeller *regSellerMenu;
+        RegisterSeller *backToReg;
     };
 

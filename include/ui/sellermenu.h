@@ -7,12 +7,14 @@
 #include <QLabel>
 #include <QDialog>
 #include <memory>
+#include "addproduct.h"
 
 
 QT_BEGIN_NAMESPACE
 
 namespace Ui {
     class SellerMenu;
+    class AddProduct;
 }
 QT_END_NAMESPACE
 
@@ -33,5 +35,7 @@ signals:
 
 private:
     Ui::SellerMenu *ui;
+    AddProduct *addProductWindow;
+    AddProduct *backToBuyersWindow;
 };
 

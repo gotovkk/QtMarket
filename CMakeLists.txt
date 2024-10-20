@@ -60,6 +60,9 @@ add_executable(QtHydraMarket
         source/menu/addproduct.cpp
         source/menu/addproduct.ui
         include/ui/addproduct.h
+        source/menu/registerseller.cpp
+        source/menu/registerseller.ui
+        include/ui/registerseller.h
 
 )
 target_link_libraries(QtHydraMarket

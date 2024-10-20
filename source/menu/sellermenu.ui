@@ -16,165 +16,26 @@
   <property name="styleSheet">
    <string notr="true"/>
   </property>
-  <widget class="QPushButton" name="backButton">
+  <widget class="QWidget" name="horizontalLayoutWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>20</y>
-     <width>101</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>11</pointsize>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">    QPushButton {
-        background-color: transparent;
-        color: white;
-        border: 1px solid #2e2e2e;
-        border-radius: 8px;
-        padding: 10px 20px;
-    }
-    QPushButton:hover {
-        border-color: #4e4e4e;
-    }
-    QPushButton:pressed {
-        background-color: #1e1e1e;
-}</string>
-   </property>
-   <property name="text">
-    <string>Выход</string>
-   </property>
-   <property name="iconSize">
-    <size>
-     <width>73</width>
-     <height>68</height>
-    </size>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="dashboardButton">
-   <property name="geometry">
-    <rect>
-     <x>230</x>
-     <y>20</y>
-     <width>121</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>11</pointsize>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">    QPushButton {
-        background-color: transparent;
-        color: white;
-        border: 1px solid #2e2e2e;
-        border-radius: 8px;
-        padding: 10px 20px;
-    }
-    QPushButton:hover {
-        border-color: #4e4e4e;
-    }
-    QPushButton:pressed {
-        background-color: #1e1e1e;
-}</string>
-   </property>
-   <property name="text">
-    <string>Dashboard</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="ordersButton">
-   <property name="geometry">
-    <rect>
-     <x>360</x>
-     <y>20</y>
-     <width>121</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>11</pointsize>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">    QPushButton {
-        background-color: transparent;
-        color: white;
-        border: 1px solid #2e2e2e;
-        border-radius: 8px;
-        padding: 10px 20px;
-    }
-    QPushButton:hover {
-        border-color: #4e4e4e;
-    }
-    QPushButton:pressed {
-        background-color: #1e1e1e;
-}</string>
-   </property>
-   <property name="text">
-    <string>Orders</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="promotionButton">
-   <property name="geometry">
-    <rect>
-     <x>490</x>
-     <y>20</y>
-     <width>131</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>11</pointsize>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">    QPushButton {
-        background-color: transparent;
-        color: white;
-        border: 1px solid #2e2e2e;
-        border-radius: 8px;
-        padding: 10px 20px;
-    }
-    QPushButton:hover {
-        border-color: #4e4e4e;
-    }
-    QPushButton:pressed {
-        background-color: #1e1e1e;
-}</string>
-   </property>
-   <property name="text">
-    <string>Promotion</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="addProductButton">
-   <property name="geometry">
-    <rect>
-     <x>640</x>
      <y>10</y>
-     <width>151</width>
-     <height>61</height>
+     <width>781</width>
+     <height>71</height>
     </rect>
    </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">    QPushButton {
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QPushButton" name="backButton">
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">    QPushButton {
         background-color: transparent;
         color: white;
         border: 1px solid #2e2e2e;
@@ -187,10 +48,144 @@
     QPushButton:pressed {
         background-color: #1e1e1e;
 }</string>
-   </property>
-   <property name="text">
-    <string>Add Product</string>
-   </property>
+      </property>
+      <property name="text">
+       <string>Выход</string>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>73</width>
+        <height>68</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <spacer name="horizontalSpacer">
+      <property name="orientation">
+       <enum>Qt::Orientation::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item>
+     <widget class="QPushButton" name="dashboardButton">
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">    QPushButton {
+        background-color: transparent;
+        color: white;
+        border: 1px solid #2e2e2e;
+        border-radius: 8px;
+        padding: 10px 20px;
+    }
+    QPushButton:hover {
+        border-color: #4e4e4e;
+    }
+    QPushButton:pressed {
+        background-color: #1e1e1e;
+}</string>
+      </property>
+      <property name="text">
+       <string>Dashboard</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="promotionButton">
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">    QPushButton {
+        background-color: transparent;
+        color: white;
+        border: 1px solid #2e2e2e;
+        border-radius: 8px;
+        padding: 10px 20px;
+    }
+    QPushButton:hover {
+        border-color: #4e4e4e;
+    }
+    QPushButton:pressed {
+        background-color: #1e1e1e;
+}</string>
+      </property>
+      <property name="text">
+       <string>Promotion</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="ordersButton">
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">    QPushButton {
+        background-color: transparent;
+        color: white;
+        border: 1px solid #2e2e2e;
+        border-radius: 8px;
+        padding: 10px 20px;
+    }
+    QPushButton:hover {
+        border-color: #4e4e4e;
+    }
+    QPushButton:pressed {
+        background-color: #1e1e1e;
+}</string>
+      </property>
+      <property name="text">
+       <string>Orders</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="addProductButton">
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">    QPushButton {
+        background-color: transparent;
+        color: white;
+        border: 1px solid #2e2e2e;
+        border-radius: 8px;
+        padding: 10px 20px;
+    }
+    QPushButton:hover {
+        border-color: #4e4e4e;
+    }
+    QPushButton:pressed {
+        background-color: #1e1e1e;
+}</string>
+      </property>
+      <property name="text">
+       <string>Add Product</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources>

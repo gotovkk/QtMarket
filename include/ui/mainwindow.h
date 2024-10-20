@@ -5,6 +5,7 @@
 #include "registerwindow.h"
 #include "sellermenu.h"
 #include "buyermenu.h"
+#include "../../source/auth/SellerAuth.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -39,9 +40,12 @@ namespace Ui {
 
     private:
         Ui::MainWindow *ui;
-        std::unique_ptr<RegistrationWindow> registrationWindow;  // Указатель на окно регистрации
-        SellerMenu *sellerMenu;
+        std::unique_ptr<RegistrationWindow> registrationWindow;
         BuyerMenu *buyerMenu;
         BuyerMenu *backToFirst;
         SellerMenu *backToFirstWin;
+        SellerMenu *sellerMenu;
+        SellerAuth sellerAuth;
+        sqlite3* db;
+
     };

@@ -11,7 +11,11 @@
 
 class DatabaseLoader {
 public:
-    void loadProductsFromDb(sqlite3* db, Storage& storage, ProductManagement& productManager);
+    void loadProductsFromDb(sqlite3 *db, Storage &storage, ProductManagement &productManager);
 
-    void addToTable(Storage& storage, sqlite3* db, int seller_id);
+    void addToTable(
+            Storage &storage, sqlite3 *db, int seller_id,
+            const std::string &name, const std::string &description,
+            double price, int amount, int category_id
+    );
 };

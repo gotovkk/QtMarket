@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>388</width>
-    <height>484</height>
+    <width>400</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,8 +16,8 @@
   <widget class="QPushButton" name="registerButton">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>410</y>
+     <x>60</x>
+     <y>470</y>
      <width>291</width>
      <height>51</height>
     </rect>
@@ -53,8 +53,8 @@
   <widget class="QLineEdit" name="lineEditLogin">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>110</y>
+     <x>60</x>
+     <y>120</y>
      <width>291</width>
      <height>51</height>
     </rect>
@@ -89,8 +89,8 @@
   <widget class="QLineEdit" name="lineEditPassword">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>230</y>
+     <x>60</x>
+     <y>260</y>
      <width>291</width>
      <height>51</height>
     </rect>
@@ -128,8 +128,8 @@
   <widget class="QLineEdit" name="lineEditPassword_2">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>290</y>
+     <x>60</x>
+     <y>330</y>
      <width>291</width>
      <height>51</height>
     </rect>
@@ -164,11 +164,11 @@
     <string>   Подтвердите пароль</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEditPassword_3">
+  <widget class="QLineEdit" name="lineEditEmail">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>170</y>
+     <x>60</x>
+     <y>190</y>
      <width>291</width>
      <height>51</height>
     </rect>
@@ -224,19 +224,51 @@
     <string>Registration</string>
    </property>
   </widget>
-  <widget class="QCheckBox" name="checkBox">
+  <widget class="QRadioButton" name="radioButton_2">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>340</y>
-     <width>341</width>
-     <height>61</height>
+     <x>60</x>
+     <y>400</y>
+     <width>311</width>
+     <height>51</height>
     </rect>
    </property>
    <property name="text">
-    <string>   Я СОГЛАСЕН  С ПРАВИЛАМИ ПЛОЩАДКИ И 
-   ДАЮ ДОБРО НА ОБРАБОТКУ ПЕРСОНАЛЬНЫХ 
-   ДАННЫХ</string>
+    <string>     Я СОГЛАСЕН НА ОБРАБОТКУ
+     ПЕРСОНАЛЬНЫХ ДАННЫХ</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="sellerRegButton">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>530</y>
+     <width>291</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">    QPushButton {
+        background-color: #3b5249;
+        color: white;
+        border-radius: 8px;
+        padding: 10px 20px;
+    }
+    QPushButton:hover {
+        background-color: #5fd35f;
+    }
+    QPushButton:pressed {
+        background-color: #3fa53f;
+    }</string>
+   </property>
+   <property name="text">
+    <string>Я хочу быть продавцом</string>
    </property>
   </widget>
  </widget>

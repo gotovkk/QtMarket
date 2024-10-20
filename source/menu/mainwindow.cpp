@@ -13,8 +13,9 @@ MainWindow::MainWindow(QWidget *parent)
             ui(new Ui::MainWindow) {
         ui->setupUi(this);
         sellerMenu = new SellerMenu;
-        buyerMenu = new BuyerMenu;
         backToFirstWin = new SellerMenu;
+
+        buyerMenu = new BuyerMenu;
         backToFirst = new BuyerMenu;
 
         connect(sellerMenu, &SellerMenu::firstWindow, this, &MainWindow::show);
@@ -34,7 +35,6 @@ void MainWindow::on_registerButton_clicked() {
     registrationWindow->exec();
 }
 
-// Функция проверки логина и пароля
 bool getLoginPassword(const std::string &login, const std::string &password) {
     // Проверка, что логин состоит только из букв и цифр и длиной более 4 символов
     std::regex loginRegex("^[A-Za-z0-9]{5,}$");
@@ -55,7 +55,6 @@ bool getLoginPassword(const std::string &login, const std::string &password) {
     qDebug() << "Пароль: " << QString::fromStdString(password);
     return true;
 }
-
 
 void MainWindow::on_loginButton_clicked() {
     QString login = ui->lineEditLogin->text();
@@ -81,14 +80,14 @@ void MainWindow::on_loginButton_clicked() {
         }
     }
 
-    void MainWindow::on_lineEditPassword_editingFinished() {
-        QString password = ui->lineEditPassword->text();
-        if (password.length() < 6) {
-            qDebug() << "Пароль слишком короткий";
-        } else {
-            qDebug() << "Пароль введен";
-        }
+void MainWindow::on_lineEditPassword_editingFinished() {
+    QString password = ui->lineEditPassword->text();
+    if (password.length() < 6) {
+        qDebug() << "Пароль слишком короткий";
+    } else {
+        qDebug() << "Пароль введен";
     }
+}
 
 void MainWindow::on_loginSellerButton_clicked() {
     QString login = ui->lineEditLogin->text();
@@ -97,7 +96,8 @@ void MainWindow::on_loginSellerButton_clicked() {
     std::string stdLogin = login.toStdString();
     std::string stdPassword = password.toStdString();
 
-    if (getLoginPassword(stdLogin, stdPassword)) {
+
+    if (sellerAuth.login(db, stdLogin, stdPassword)) {
         sellerMenu->show();
         this->close();
     } else {

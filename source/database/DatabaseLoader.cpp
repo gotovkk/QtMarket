@@ -1,3 +1,4 @@
+#include <QDebug>
 #include "DatabaseLoader.h"
 using namespace std;
 
@@ -23,31 +24,15 @@ void DatabaseLoader::loadProductsFromDb(sqlite3* db, Storage& storage, ProductMa
             productManager.addProduct(storage, std::move(product));
         }
     } else {
-        std::cerr << "Ошибка: " << sqlite3_errmsg(db) << std::endl;
+        qDebug() << "Ошибка: " << sqlite3_errmsg(db);
     }
 
     sqlite3_finalize(stmt);
 }
 
-void DatabaseLoader::addToTable(Storage& storage, sqlite3* db, int seller_id) {
-    std::string name;
-    std::string description;
-    double price;
-    int amount;
-    int category_id;
-
-    std::cout << "Введите название продукта: ";
-    std::cin >> name;
-    std::cout << "Введите описание продукта: ";
-    std::cin.ignore();
-    std::getline(std::cin, description);
-    std::cout << "Введите цену: ";
-    std::cin >> price;
-    std::cout << "Введите количество: ";
-    std::cin >> amount;
-    std::cout << "Введите ID категории: ";
-    std::cin >> category_id;
-
+void DatabaseLoader::addToTable(Storage& storage, sqlite3* db, int seller_id,
+                                const std::string& name, const std::string& description,
+                                double price, int amount, int category_id) {
     // Получение текущего времени
     auto now = std::chrono::system_clock::now();
     std::time_t now_time_t = std::chrono::system_clock::to_time_t(now);
@@ -57,17 +42,19 @@ void DatabaseLoader::addToTable(Storage& storage, sqlite3* db, int seller_id) {
     ss << std::put_time(std::localtime(&now_time_t), "%Y-%m-%d %H:%M:%S");
     std::string added_date = ss.str();
 
+    // Формируем SQL-запрос на вставку
     std::string sqlInsert = std::format(
-            "INSERT INTO products (name, description, price, seller_id, category_id, amount, added_date) VALUES ('{}', '{}', {}, {}, {}, {}, '{}');",
+            "INSERT INTO products (name, description, price, seller_id, category_id, amount, added_date) "
+            "VALUES ('{}', '{}', {}, {}, {}, {}, '{}');",
             name, description, price, seller_id, category_id, amount, added_date
     );
 
     char* errMsg = nullptr;
     int rc = sqlite3_exec(db, sqlInsert.c_str(), nullptr, nullptr, &errMsg);
     if (rc != SQLITE_OK) {
-        std::cerr << "Ошибка добавления продукта в базу данных: " << errMsg << std::endl;
+        qDebug() << "Ошибка добавления продукта в базу данных: " << errMsg;
         sqlite3_free(errMsg);
     } else {
-        std::cout << "Продукт успешно добавлен в базу данных." << std::endl;
+        qDebug() << "Продукт успешно добавлен в базу данных.";
     }
 }

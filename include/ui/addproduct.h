@@ -1,5 +1,6 @@
 #pragma once
 #include <QWidget>
+#include <QTimer>
 #include <QMainWindow>
 #include <QDebug>
 #include <QString>
@@ -7,6 +8,9 @@
 #include <QLabel>
 #include <QDialog>
 #include <memory>
+#include "../../source/database/DatabaseLoader.h"
+#include "../Storage.h"
+#include "../../source/management/ProductManagement.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -25,10 +29,19 @@ public:
     ~AddProduct();
 
 private slots:
+    void on_backButton_clicked();
+    void on_addProductButton_clicked();
 
 signals:
+    void addProductWindow();
+
 
 private:
     Ui::AddProduct *ui;
+    DatabaseLoader databaseLoader;
+    Storage storage;
+    sqlite3* db;
+
+    void setupDatabase();
 };
 

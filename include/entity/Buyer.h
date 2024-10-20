@@ -1,14 +1,24 @@
-//
-// Created by anima on 18.10.2024.
-//
+#pragma once
+#include "User.h"
+#include "../../source/management/CartManagement.h"
 
-#ifndef QTHYDRAMARKET_BUYER_H
-#define QTHYDRAMARKET_BUYER_H
+class Buyer : public User, public CartManagement
+{
+public:
+    Buyer(const std::string& username, const std::string& password, int buyerId)
+            : User(username, password), buyerId(buyerId) {}
+
+    bool login(const std::string& passwordInput) const override {
+        return password == passwordInput;
+    }
+
+    void logout() override {
+        std::cout << "Покупатель" << username << " вышел." << std::endl;
+    }
 
 
-class Buyer {
 
+private:
+    int buyerId;
 };
 
-
-#endif //QTHYDRAMARKET_BUYER_H
