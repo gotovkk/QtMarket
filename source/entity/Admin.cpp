@@ -5,6 +5,6 @@
 #include "../../include/entity/Admin.h"
 
 
-void Admin::approveSeller([[maybe_unused]] const Storage& storage, [[maybe_unused]] int sellerId) const {
+[[maybe_unused]] void Admin::approveSeller([[maybe_unused]] const Storage& storage, [[maybe_unused]] int sellerId) const {
     std::cout << "Админ " << User::getUsername() << " зашел под аккаунтом продавца с ID: " << sellerId << std::endl;
 }

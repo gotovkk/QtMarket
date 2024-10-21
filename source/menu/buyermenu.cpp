@@ -7,7 +7,7 @@ BuyerMenu::BuyerMenu(QWidget *parent) :
         ui(new Ui::BuyerMenu) {
     ui->setupUi(this);
 
-    QWidget *container = new QWidget();
+    auto *container = new QWidget();
     layout = new QVBoxLayout(container);
 
     container->setLayout(layout);
@@ -48,8 +48,8 @@ void BuyerMenu::loadProducts(sqlite3 *db) {
         return;
     }
 
-    QWidget *container = new QWidget();
-    QVBoxLayout *layout = new QVBoxLayout(container);
+    auto *container = new QWidget();
+    auto *pBoxLayout = new QVBoxLayout(container);
 
 
     ui->scrollArea->setWidget(container);
@@ -78,14 +78,14 @@ void BuyerMenu::loadProducts(sqlite3 *db) {
         productWidget->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
         productWidget->setMinimumHeight(120); // Можно изменить в зависимости от дизайна
 
-        layout->addWidget(productWidget);
+        pBoxLayout->addWidget(productWidget);
     }
 
     sqlite3_finalize(stmt);
 
-    container->setLayout(layout);
+    container->setLayout(pBoxLayout);
     container->adjustSize();
-    container->setMinimumHeight(layout->sizeHint().height());
+    container->setMinimumHeight(pBoxLayout->sizeHint().height());
 
     ui->scrollArea->update();
     container->update();

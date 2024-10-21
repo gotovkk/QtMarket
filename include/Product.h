@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <utility>
 #include <vector>
 #include <string>
 #include "../sqlite/sqlite3.h"
@@ -19,19 +20,19 @@ private:
     std::string added_date;
 
 public:
-    Product(int id, const std::string& name, const std::string& description, double price, int amount, int seller_id,
-            int category_id, const std::string& added_date)
-            : id(id), name(name), description(description), price(price), amount(amount),
-              seller_id(seller_id), category_id(category_id), added_date(added_date) {}
+    Product(int id, std::string  name, std::string  description, double price, int amount, int seller_id,
+            int category_id, std::string  added_date)
+            : id(id), name(std::move(name)), description(std::move(description)), price(price), amount(amount),
+              seller_id(seller_id), category_id(category_id), added_date(std::move(added_date)) {}
 
     double getPrice() const;
     int getAmount() const;
-    std::string getName() const;
-    std::string getDescription() const;
+    [[nodiscard]] std::string getName() const;
+    [[nodiscard]] std::string getDescription() const;
     int getSellerId() const;
     int getCategoryId() const;
     int getId() const;
-    std::string getAddedDate() const;
+    [[nodiscard]] std::string getAddedDate() const;
     void setPrice(double newPrice);
     void setSellerId(int newId);
     void setAmount(int newAmount);

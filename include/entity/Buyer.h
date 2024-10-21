@@ -8,7 +8,7 @@ public:
     Buyer(const std::string& username, const std::string& password, int buyerId)
             : User(username, password), buyerId(buyerId) {}
 
-    bool login(const std::string& passwordInput) const override {
+    [[nodiscard]] bool login(const std::string& passwordInput) const override {
         return password == passwordInput;
     }
 

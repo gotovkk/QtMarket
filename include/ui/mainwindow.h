@@ -38,14 +38,13 @@ namespace Ui {
 
     private:
         Ui::MainWindow *ui;
-        std::unique_ptr<RegistrationWindow> registrationWindow;
         BuyerMenu *buyerMenu;
         BuyerMenu *backToFirst;
         SellerMenu *backToFirstWin;
         SellerMenu *sellerMenu;
         SellerAuth sellerAuth;
         BuyerAuth buyerAuth;
-        sqlite3* db;
+        sqlite3* db{};
         void setupDatabase();
 
 

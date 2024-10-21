@@ -41,7 +41,7 @@ void MainWindow::setupDatabase() {
 }
 
 void MainWindow::on_registerButton_clicked() {
-    RegistrationWindow *registrationWindow = new RegistrationWindow(this);
+    auto *registrationWindow = new RegistrationWindow(this);
     registrationWindow->exec();
 }
 

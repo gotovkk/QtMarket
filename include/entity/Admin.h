@@ -15,7 +15,7 @@ public:
             int sellerId
     ) : User(username, password), sellerId(sellerId) {}
 
-    bool login(const std::string& passwordInput) const override {
+    [[nodiscard]] bool login(const std::string& passwordInput) const override {
         return password == passwordInput;
     }
 
@@ -23,7 +23,7 @@ public:
         std::cout << "Администратор " << getUsername() << " вышел." << std::endl;
     }
 
-    void approveSeller(
+    [[maybe_unused]] void approveSeller(
             [[maybe_unused]] const Storage& storage,
             [[maybe_unused]] int sellerId
     ) const;
@@ -52,11 +52,14 @@ public:
         std::cout << "Введите название продукта для удаления от имени администратора: ";
         std::cin >> name;
         auto& products = storage.productsList();
-        for (auto iter = products.begin(); iter != products.end(); iter++) {
-            if ((*iter)->getName() == name && (*iter)->getSellerId() == sellerId) {
-                products.erase(iter);
-                return true;
-            }
+        auto iter = std::ranges::find_if(products.begin(), products.end(),
+                                 [&name, sellerId](const auto& product) {
+                                     return product->getName() == name && product->getSellerId() == sellerId;
+                                 });
+
+        if (iter != products.end()) {
+            products.erase(iter);
+            return true;
         }
         std::cout << "Товар не найден " << std::endl;
         return false;

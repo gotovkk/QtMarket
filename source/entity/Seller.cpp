@@ -3,3 +3,7 @@
 //
 
 #include "../../include/entity/Seller.h"
+
+int Seller::getSellerId() const {
+    return 0;
+}
