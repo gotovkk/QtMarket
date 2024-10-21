@@ -9,6 +9,7 @@
 #include <QLabel>
 #include <QDialog>
 #include <QMessageBox>
+#include <QRegularExpression>
 #include <memory>
 #include "../../source/database/DatabaseLoader.h"
 #include "../Storage.h"

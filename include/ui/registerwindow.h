@@ -8,6 +8,8 @@
 #include <QLabel>
 #include <QDialog>
 #include <memory>
+#include <QRegularExpression>
+#include <regex>
 #include "registerseller.h"
 #include "../../source/auth/BuyerAuth.h"
 

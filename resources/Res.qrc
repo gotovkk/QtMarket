@@ -1,3 +1,6 @@
 <RCC>
-  <qresource prefix="hydraLogo"/>
+  <qresource prefix="hydraLogo">
+    <file>gudraLobo.png</file>
+  </qresource>
+  <qresource prefix="gudraLobo"/>
 </RCC>

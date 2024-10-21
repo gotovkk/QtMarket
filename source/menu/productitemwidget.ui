@@ -6,79 +6,163 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>117</height>
+    <width>640</width>
+    <height>174</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QWidget" name="layoutWidget">
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>30</y>
+     <width>141</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>В наличии:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="nameLabel">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>10</y>
+     <width>281</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Имя продукта</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="priceLabel">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>60</y>
+     <width>109</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Цена</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="amountLabel">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>30</y>
+     <width>109</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Количество</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>60</y>
+     <width>49</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Цена:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="descriptionLabel">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>70</y>
+     <width>641</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+     <italic>false</italic>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Описание</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>0</y>
+     <width>141</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Название:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>0</y>
-     <width>107</width>
-     <height>100</height>
+     <y>100</y>
+     <width>1091</width>
+     <height>20</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <item>
-     <widget class="QLabel" name="nameLabel">
-      <property name="font">
-       <font>
-        <pointsize>11</pointsize>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>Имя продукта</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QLabel" name="priceLabel">
-      <property name="font">
-       <font>
-        <pointsize>11</pointsize>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>Цена:</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QLabel" name="amountLabel">
-      <property name="font">
-       <font>
-        <pointsize>11</pointsize>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>Количество</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QLabel" name="descriptionLabel">
-      <property name="font">
-       <font>
-        <pointsize>11</pointsize>
-        <italic>false</italic>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>Описание</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
+   <property name="text">
+    <string>_____________________________________________________________________________________________________________________________________</string>
+   </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../resources/Res.qrc"/>
+ </resources>
  <connections/>
 </ui>

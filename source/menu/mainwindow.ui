@@ -229,8 +229,8 @@
    <widget class="QLabel" name="MarketName">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>320</y>
+      <x>30</x>
+      <y>160</y>
       <width>401</width>
       <height>151</height>
      </rect>
@@ -250,8 +250,8 @@
    <widget class="QLabel" name="slogan">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>440</y>
+      <x>30</x>
+      <y>280</y>
       <width>361</width>
       <height>31</height>
      </rect>
@@ -290,6 +290,25 @@
      <string>Неправильный логин или пароль.</string>
     </property>
    </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>460</y>
+      <width>111</width>
+      <height>131</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="../../resources/Res.qrc">:/hydraLogo/gudraLobo.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -303,6 +322,8 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../resources/Res.qrc"/>
+ </resources>
  <connections/>
 </ui>

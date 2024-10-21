@@ -39,7 +39,7 @@ void AddProduct::on_addProductButton_clicked() {
     double price = ui->lineEditPrice->text().toDouble();
     int amount = ui->lineEditAmount->text().toInt();
     int category_id = ui->lineEditCategory->text().toInt();
-    int seller_id = 1; // Пример ID продавца, можете изменить на нужный
+    int seller_id = 1;
 
     // Вызов метода добавления продукта
     databaseLoader.addToTable(storage, db, seller_id, name.toStdString(), description.toStdString(), price, amount, category_id);

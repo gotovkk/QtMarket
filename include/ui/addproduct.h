@@ -1,4 +1,5 @@
 #pragma once
+
 #include <QWidget>
 #include <QTimer>
 #include <QMainWindow>
@@ -26,21 +27,24 @@ Q_OBJECT
 
 public:
     explicit AddProduct(QWidget *parent = nullptr);
+
     ~AddProduct();
 
 private slots:
+
     void on_backButton_clicked();
+
     void on_addProductButton_clicked();
 
 signals:
-    void addProductWindow();
 
+    void addProductWindow();
 
 private:
     Ui::AddProduct *ui;
     DatabaseLoader databaseLoader;
     Storage storage;
-    sqlite3* db;
+    sqlite3 *db;
 
     void setupDatabase();
 };

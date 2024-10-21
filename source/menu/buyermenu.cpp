@@ -15,6 +15,8 @@ BuyerMenu::BuyerMenu(QWidget *parent) :
     ui->scrollArea->setWidget(container);
     ui->scrollArea->setWidgetResizable(true);
 
+    ui->scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+
     setupDatabase();
     loadProducts(db);
 }
@@ -46,21 +48,45 @@ void BuyerMenu::loadProducts(sqlite3 *db) {
         return;
     }
 
+    QWidget *container = new QWidget();
+    QVBoxLayout *layout = new QVBoxLayout(container);
+
+
+    ui->scrollArea->setWidget(container);
+    ui->scrollArea->setWidgetResizable(true);
+
     while (sqlite3_step(stmt) == SQLITE_ROW) {
         int id = sqlite3_column_int(stmt, 0);
-        std::string name = reinterpret_cast<const char *>(sqlite3_column_text(stmt, 1));
-        std::string description = reinterpret_cast<const char *>(sqlite3_column_text(stmt, 2));
+
+        const char* nameText = reinterpret_cast<const char *>(sqlite3_column_text(stmt, 1));
+        std::string name = nameText ? nameText : "";
+
+        const char* descriptionText = reinterpret_cast<const char *>(sqlite3_column_text(stmt, 2));
+        std::string description = descriptionText ? descriptionText : "";
+
         int price = sqlite3_column_int(stmt, 3);
         int amount = sqlite3_column_int(stmt, 4);
         int seller_id = sqlite3_column_int(stmt, 5);
         int category_id = sqlite3_column_int(stmt, 6);
-        std::string added_date = reinterpret_cast<const char *>(sqlite3_column_text(stmt, 7));
+
+        const char* dateText = reinterpret_cast<const char *>(sqlite3_column_text(stmt, 7));
+        std::string added_date = dateText ? dateText : "";
 
         Product product(id, name, description, price, amount, seller_id, category_id, added_date);
-
         auto *productWidget = new ProductItemWidget(product);
+
+        productWidget->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+        productWidget->setMinimumHeight(120); // Можно изменить в зависимости от дизайна
+
         layout->addWidget(productWidget);
     }
 
     sqlite3_finalize(stmt);
+
+    container->setLayout(layout);
+    container->adjustSize();
+    container->setMinimumHeight(layout->sizeHint().height());
+
+    ui->scrollArea->update();
+    container->update();
 }

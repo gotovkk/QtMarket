@@ -15,9 +15,6 @@ public:
     void logout() override {
         std::cout << "Покупатель" << username << " вышел." << std::endl;
     }
-
-
-
 private:
     int buyerId;
 };

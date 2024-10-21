@@ -36,6 +36,30 @@ void RegisterSeller::on_registerButton_clicked() {
     QString phone = ui->lineEditNum->text();
     QString password = ui->lineEditPassword->text();
 
+    if (username.isEmpty() || email.isEmpty() || phone.isEmpty() || password.isEmpty()) {
+        QMessageBox::warning(this, "Ошибка регистрации", "Все поля должны быть заполнены.");
+        return;
+    }
+
+    if (password.length() < 6) {
+        QMessageBox::warning(this, "Ошибка регистрации", "Пароль должен содержать не менее 6 символов.");
+        return;
+    }
+
+    QRegularExpression emailPattern("^[\\w\\.-]+@[\\w\\.-]+\\.[a-zA-Z]{2,}$");
+    QRegularExpressionMatch emailMatch = emailPattern.match(email);
+    if (!emailMatch.hasMatch()) {
+        QMessageBox::warning(this, "Ошибка регистрации", "Введите корректный адрес электронной почты.");
+        return;
+    }
+
+    QRegularExpression phonePattern("^\\d{7,15}$");
+    QRegularExpressionMatch phoneMatch = phonePattern.match(phone);
+    if (!phoneMatch.hasMatch()) {
+        QMessageBox::warning(this, "Ошибка регистрации", "Введите корректный номер телефона (только цифры, от 7 до 15 символов).");
+        return;
+    }
+
     std::string stdUsername = username.toStdString();
     std::string stdEmail = email.toStdString();
     std::string stdPhone = phone.toStdString();
@@ -47,6 +71,7 @@ void RegisterSeller::on_registerButton_clicked() {
                                  "Регистрация прошла успешно! Ваш ID: " + QString::number(seller_id));
         this->close();
     } else {
-        QMessageBox::warning(this, "Регистрация", "Ошибка регистрации! Возможно, такой логин уже существует.");
+        QMessageBox::warning(this, "Ошибка регистрации",
+                             "Ошибка регистрации! Возможно, такой логин уже существует.");
     }
 }

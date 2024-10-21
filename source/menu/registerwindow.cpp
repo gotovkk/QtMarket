@@ -39,17 +39,35 @@ void RegistrationWindow::on_registerButton_clicked() {
     QString email = ui->lineEditEmail->text();
     QString password = ui->lineEditPassword->text();
 
+    if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
+        QMessageBox::warning(this, "Ошибка регистрации", "Все поля должны быть заполнены.");
+        return;
+    }
+
+    if (password.length() < 6) {
+        QMessageBox::warning(this, "Ошибка регистрации", "Пароль должен содержать не менее 6 символов.");
+        return;
+    }
+
+    QRegularExpression emailPattern("^[\\w\\.-]+@[\\w\\.-]+\\.[a-zA-Z]{2,}$");
+    QRegularExpressionMatch match = emailPattern.match(email);
+    if (!match.hasMatch()) {
+        QMessageBox::warning(this, "Ошибка регистрации", "Введите корректный адрес электронной почты.");
+        return;
+    }
+
     std::string stdName = name.toStdString();
     std::string stdEmail = email.toStdString();
     std::string stdPassword = password.toStdString();
     int buyer_id;
+
 
     if (buyerAuth.registerBuyer(db, stdName, stdPassword, stdEmail, buyer_id)) {
         QMessageBox::information(this, "Регистрация",
                                  "Регистрация прошла успешно! Ваш ID: " + QString::number(buyer_id));
         this->close();
     } else {
-        QMessageBox::warning(this, "Регистрация", "Ошибка регистрации! Возможно, такое имя уже существует.");
+        QMessageBox::warning(this, "Ошибка регистрации",
+                             "Ошибка регистрации! Возможно, такое имя пользователя или email уже существует.");
     }
 }
-
