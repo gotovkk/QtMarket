@@ -4,17 +4,13 @@
 #include <iostream>
 
 
-AddProduct::AddProduct(QWidget *parent):
-        QWidget(parent),
-        ui(new Ui::AddProduct)
-        {
-            ui->setupUi(this);
-            setupDatabase();
-            ui->productLabel->setVisible(false);
-        }
+AddProduct::AddProduct(QWidget *parent) : QWidget(parent), ui(new Ui::AddProduct) {
+    ui->setupUi(this);
+    setupDatabase();
+    ui->productLabel->setVisible(false);
+}
 
-AddProduct::~AddProduct()
-{
+AddProduct::~AddProduct() {
     delete ui;
 }
 
@@ -33,7 +29,6 @@ void AddProduct::on_backButton_clicked() {
 }
 
 void AddProduct::on_addProductButton_clicked() {
-    // Получение данных из QLineEdit
     QString name = ui->lineEditName->text();
     QString description = ui->lineEditDescription->text();
     double price = ui->lineEditPrice->text().toDouble();
@@ -41,10 +36,9 @@ void AddProduct::on_addProductButton_clicked() {
     int category_id = ui->lineEditCategory->text().toInt();
     int seller_id = 1;
 
-    // Вызов метода добавления продукта
-    databaseLoader.addToTable(storage, db, seller_id, name.toStdString(), description.toStdString(), price, amount, category_id);
+    databaseLoader.addToTable(storage, db, seller_id, name.toStdString(), description.toStdString(), price, amount,
+                              category_id);
 
-    // Очистка полей после добавления
     ui->lineEditName->clear();
     ui->lineEditDescription->clear();
     ui->lineEditPrice->clear();

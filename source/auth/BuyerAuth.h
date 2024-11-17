@@ -1,5 +1,6 @@
 #pragma once
 #include "../../sqlite/sqlite3.h"
+#include "../exception/Exceptions.h"
 #include <QString>
 #include <QMessageBox>
 #include <QDebug>

@@ -2,12 +2,11 @@
 #include "../include/Storage.h"
 #include <QApplication>
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     system("chcp 1251");
-    sqlite3* db;
+    sqlite3 *db;
     int rc;
-    const char* dbPath = R"(C:\Users\anima\CLionProjects\QtHydraMarket\mydb.db)";
+    const char *dbPath = R"(C:\Users\anima\CLionProjects\QtHydraMarket\mydb.db)";
 
     rc = sqlite3_open(dbPath, &db);
     if (rc != SQLITE_OK) {

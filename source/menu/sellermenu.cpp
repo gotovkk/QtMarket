@@ -4,9 +4,7 @@
 #include <iostream>
 
 
-SellerMenu::SellerMenu(QWidget *parent) :
-        QWidget(parent),
-        ui(new Ui::SellerMenu) {
+SellerMenu::SellerMenu(QWidget *parent) : QWidget(parent), ui(new Ui::SellerMenu) {
     ui->setupUi(this);
     addProductWindow = new AddProduct;
     backToBuyersWindow = new AddProduct;

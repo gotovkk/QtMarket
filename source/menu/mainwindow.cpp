@@ -4,7 +4,6 @@
 #include "../../include/ui/mainwindow.h"
 #include "ui_mainwindow.h"
 #include <iostream>
-#include <QDebug>
 #include <QString>
 #include <regex>
 
@@ -24,6 +23,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(backToFirst, &BuyerMenu::secondWindow, this, &MainWindow::show);
     ui->labelErrorMessage->setVisible(false);
     setupDatabase();
+
 
 }
 

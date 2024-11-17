@@ -13,7 +13,16 @@ public:
     explicit ProductItemWidget(const Product& product, QWidget *parent = nullptr);
     ~ProductItemWidget();
 
+
+
+private slots:
+    void on_addItemButton_clicked();
+
+signals:
+    void addItemToCart(const Product &product);
+
 private:
     Ui::ProductItemWidget *ui;
+    Product product;
 };
 

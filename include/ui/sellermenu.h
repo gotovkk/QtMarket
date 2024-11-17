@@ -1,4 +1,5 @@
 #pragma once
+
 #include <QWidget>
 #include <QMainWindow>
 #include <QDebug>
@@ -14,6 +15,7 @@ QT_BEGIN_NAMESPACE
 
 namespace Ui {
     class SellerMenu;
+
     class AddProduct;
 }
 QT_END_NAMESPACE
@@ -24,13 +26,17 @@ Q_OBJECT
 
 public:
     explicit SellerMenu(QWidget *parent = nullptr);
+
     ~SellerMenu();
 
 private slots:
+
     void on_backButton_clicked();
+
     void on_addProductButton_clicked();
 
 signals:
+
     void firstWindow();
 
 private:

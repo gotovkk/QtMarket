@@ -3,9 +3,7 @@
 #include "../../include/ui/mainwindow.h"
 #include <iostream>
 
-RegistrationWindow::RegistrationWindow(QWidget *parent) :
-        QDialog(parent),
-        ui(new Ui::RegistrationWindow) {
+RegistrationWindow::RegistrationWindow(QWidget *parent) : QDialog(parent), ui(new Ui::RegistrationWindow) {
     ui->setupUi(this);
     regSellerMenu = new RegisterSeller;
     backToReg = new RegisterSeller;
@@ -67,7 +65,6 @@ void RegistrationWindow::on_registerButton_clicked() {
                                  "Регистрация прошла успешно! Ваш ID: " + QString::number(buyer_id));
         this->close();
     } else {
-        QMessageBox::warning(this, "Ошибка регистрации",
-                             "Ошибка регистрации! Возможно, такое имя пользователя или email уже существует.");
+        throw SQLException("Ошибка регистрации! Возможно, такое имя пользователя или email уже существует.");
     }
 }

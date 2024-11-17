@@ -30,8 +30,6 @@ add_executable(QtHydraMarket
         source/manager/ErrorManager.h
         source/Product.cpp
         include/Product.h
-        source/auth/SellerAuth.cpp
-        source/auth/SellerAuth.h
         source/database/DatabaseLoader.cpp
         source/database/DatabaseLoader.h
         source/entity/Admin.cpp
@@ -63,11 +61,26 @@ add_executable(QtHydraMarket
         source/menu/registerseller.cpp
         source/menu/registerseller.ui
         include/ui/registerseller.h
-        source/auth/BuyerAuth.cpp
-        source/auth/BuyerAuth.h
+        source/menu/cartmenu.cpp
         source/menu/productitemwidget.cpp
         source/menu/productitemwidget.ui
         include/ui/productitemwidget.h
+        include/ui/cartmenu.h
+        source/menu/cartmenu.ui
+        source/menu/cartitemwidget.cpp
+        include/ui/cartitemwidget.h
+        source/menu/cartitemwidget.ui
+        include/Cart.h
+        source/auth/SellerAuth.cpp
+        source/auth/SellerAuth.h
+        source/auth/BuyerAuth.cpp
+        source/auth/BuyerAuth.h
+        source/auth/SessionManager.cpp
+        source/auth/SessionManager.h
+        source/database/CartDatabase.cpp
+        source/database/CartDatabase.h
+        source/exception/Exceptions.cpp
+        source/exception/Exceptions.h
 
 )
 target_link_libraries(QtHydraMarket

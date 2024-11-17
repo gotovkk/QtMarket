@@ -1,4 +1,5 @@
 #pragma once
+
 #include <QMainWindow>
 #include <QDialog>
 #include <QStackedWidget>
@@ -12,40 +13,44 @@
 QT_BEGIN_NAMESPACE
 namespace Ui {
     class MainWindow;
+
     class RegistrationWindow;
+
     class SellerMenu;
+
     class BuyerMenu;
 }
-    QT_END_NAMESPACE
+QT_END_NAMESPACE
 
-    class MainWindow : public QMainWindow {
-    Q_OBJECT
+class MainWindow : public QMainWindow {
+Q_OBJECT
 
-    public:
-        MainWindow(QWidget *parent = nullptr);
+public:
+    MainWindow(QWidget *parent = nullptr);
 
-        ~MainWindow();
+    ~MainWindow();
 
-    private slots:
+private slots:
 
-        void on_registerButton_clicked();
+    void on_registerButton_clicked();
 
-        void on_loginSellerButton_clicked();
+    void on_loginSellerButton_clicked();
 
-        void on_loginButton_clicked();
+    void on_loginButton_clicked();
 
-        signals:
+signals:
 
-    private:
-        Ui::MainWindow *ui;
-        BuyerMenu *buyerMenu;
-        BuyerMenu *backToFirst;
-        SellerMenu *backToFirstWin;
-        SellerMenu *sellerMenu;
-        SellerAuth sellerAuth;
-        BuyerAuth buyerAuth;
-        sqlite3* db{};
-        void setupDatabase();
+private:
+    Ui::MainWindow *ui;
+    BuyerMenu *buyerMenu;
+    BuyerMenu *backToFirst;
+    SellerMenu *backToFirstWin;
+    SellerMenu *sellerMenu;
+    SellerAuth sellerAuth;
+    BuyerAuth buyerAuth;
+    sqlite3 *db{};
+
+    void setupDatabase();
 
 
-    };
+};

@@ -1,12 +1,11 @@
 #include "ui_registerseller.h"
 #include "../../include/ui/registerseller.h"
+#include "../exception/Exceptions.h"
 
 #include <iostream>
 
 
-RegisterSeller::RegisterSeller(QWidget *parent) :
-        QWidget(parent),
-        ui(new Ui::RegisterSeller) {
+RegisterSeller::RegisterSeller(QWidget *parent) : QWidget(parent), ui(new Ui::RegisterSeller) {
     ui->setupUi(this);
     setupDatabase();
 
@@ -56,7 +55,8 @@ void RegisterSeller::on_registerButton_clicked() {
     QRegularExpression phonePattern("^\\d{7,15}$");
     QRegularExpressionMatch phoneMatch = phonePattern.match(phone);
     if (!phoneMatch.hasMatch()) {
-        QMessageBox::warning(this, "Ошибка регистрации", "Введите корректный номер телефона (только цифры, от 7 до 15 символов).");
+        QMessageBox::warning(this, "Ошибка регистрации",
+                             "Введите корректный номер телефона (только цифры, от 7 до 15 символов).");
         return;
     }
 
@@ -71,7 +71,6 @@ void RegisterSeller::on_registerButton_clicked() {
                                  "Регистрация прошла успешно! Ваш ID: " + QString::number(seller_id));
         this->close();
     } else {
-        QMessageBox::warning(this, "Ошибка регистрации",
-                             "Ошибка регистрации! Возможно, такой логин уже существует.");
+        throw SQLException("Ошибка регистрации! Возможно, такой логин уже существует.");
     }
 }
