@@ -4,7 +4,7 @@
 #include <QString>
 #include <QMessageBox>
 #include <QDebug>
-
+#include "../../include/ui/sellermenu.h"
 
 class BuyerAuth {
 public:
@@ -19,5 +19,7 @@ public:
             const std::string &name,
             const std::string &password
     ) const;
+
+    SellerMenu* sellerMenu;
 };
 

@@ -1,5 +1,6 @@
 #include "ui_addproduct.h"
 #include "../../include/ui/addproduct.h"
+#include "../auth/SessionManager.h"
 
 #include <iostream>
 
@@ -34,7 +35,7 @@ void AddProduct::on_addProductButton_clicked() {
     double price = ui->lineEditPrice->text().toDouble();
     int amount = ui->lineEditAmount->text().toInt();
     int category_id = ui->lineEditCategory->text().toInt();
-    int seller_id = 1;
+    int seller_id = SessionManager::getCurrentUserId();
 
     databaseLoader.addToTable(storage, db, seller_id, name.toStdString(), description.toStdString(), price, amount,
                               category_id);

@@ -1,5 +1,6 @@
 // SessionManager.h
 #pragma once
+#include "../../sqlite/sqlite3.h"
 
 class SessionManager {
 public:
@@ -12,10 +13,9 @@ public:
     }
 
     static void logout() {
-        currentUserId = -1;  // Очистить сессию
+        currentUserId = -1;
     }
 
 private:
-    static int currentUserId;  // Идентификатор текущего пользователя
+    static int currentUserId;
 };
-

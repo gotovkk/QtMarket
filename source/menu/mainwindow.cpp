@@ -3,6 +3,7 @@
 //
 #include "../../include/ui/mainwindow.h"
 #include "ui_mainwindow.h"
+#include "../auth/SessionManager.h"
 #include <iostream>
 #include <QString>
 #include <regex>
@@ -23,12 +24,15 @@ MainWindow::MainWindow(QWidget *parent)
     connect(backToFirst, &BuyerMenu::secondWindow, this, &MainWindow::show);
     ui->labelErrorMessage->setVisible(false);
     setupDatabase();
-
-
 }
 
 MainWindow::~MainWindow() {
     delete ui;
+}
+
+void MainWindow::show() {
+    qDebug() << "MainWindow отображается!";
+    QMainWindow::show(); // Вызываем базовый метод для отображения окна
 }
 
 void MainWindow::setupDatabase() {
@@ -78,6 +82,7 @@ void MainWindow::on_loginButton_clicked() {
 
     if (buyerAuth.login(db, stdLogin, stdPassword)) {
         buyerMenu->show();
+        buyerMenu->loadProducts(db);
         this->close();
     }
 }
@@ -96,7 +101,11 @@ void MainWindow::on_loginSellerButton_clicked() {
     }
 
     if (sellerAuth.login(db, stdLogin, stdPassword)) {
+        int sellerId = SessionManager::getCurrentUserId();
+
+        sellerMenu->loadProducts(db, sellerId);
         sellerMenu->show();
+
         this->close();
     } else {
         QMessageBox::warning(this, "Ошибка", "Неправильный логин или пароль. Попробуйте снова.");

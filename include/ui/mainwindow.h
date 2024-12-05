@@ -30,6 +30,9 @@ public:
 
     ~MainWindow();
 
+
+    void show();
+
 private slots:
 
     void on_registerButton_clicked();
@@ -39,7 +42,7 @@ private slots:
     void on_loginButton_clicked();
 
 signals:
-
+    void showSellerMenu();
 private:
     Ui::MainWindow *ui;
     BuyerMenu *buyerMenu;

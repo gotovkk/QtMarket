@@ -8,21 +8,25 @@ BuyerMenu::BuyerMenu(QWidget *parent) : QWidget(parent), ui(new Ui::BuyerMenu), 
 
     setupDatabase();
     loadProducts(db);
-    cartMenu = new CartMenu;  // добавляем поле CartMenu
+    cartMenu = new CartMenu;  
     cartMenu->hide();
 
-    cartMenu->loadCartItems();  // Загрузка корзины для текущего пользователя
+    cartMenu->loadCartItems();
 
 
     connect(this, &BuyerMenu::showCartMenu, this, [=]() {
-        this->hide();        // Скрываем BuyerMenu
-        cartMenu->show();    // Показываем CartMenu
+        this->hide();
+        cartMenu->show();
     });
 
     connect(cartMenu, &CartMenu::backToShopping, this, [=]() {
-        cartMenu->hide();    // Скрываем CartMenu
-        this->show();        // Показываем BuyerMenu
+        cartMenu->hide();
+        this->show();
     });
+
+    connect(ui->searchLineEdit, &QLineEdit::textChanged, this, &BuyerMenu::filterProductsByName);
+
+
 }
 
 BuyerMenu::~BuyerMenu() {
@@ -30,6 +34,18 @@ BuyerMenu::~BuyerMenu() {
     sqlite3_close(db);
 }
 
+void BuyerMenu::filterProductsByName(const QString &searchText) {
+    QString lowerCaseSearchText = searchText.toLower();
+
+    filteredProducts.clear();
+    for (const auto &product : productManager.getItems()) {
+        QString productName = QString::fromStdString(product->getName()).toLower();
+        if (productName.contains(lowerCaseSearchText)) {
+            filteredProducts.push_back(product);
+        }
+    }
+    displayFilteredProducts();
+}
 
 
 void BuyerMenu::on_toggleSortButton_clicked() {
@@ -48,7 +64,7 @@ void BuyerMenu::on_toggleSortButton_clicked() {
         qDebug() << "Продукты отсортированы по имени.";
     }
 
-    displaySortedProducts();
+    displayFilteredProducts();
 }
 
 template<typename T, typename Comparator>
@@ -57,15 +73,15 @@ void sortProducts(std::vector<T> &products, Comparator comp) {
 }
 
 void BuyerMenu::sortByPriceFunction() {
-    sortProducts(products, [](const Product &a, const Product &b) {
-        return a.getPrice() < b.getPrice();
+    productManager.sortItems([](const Product *a, const Product *b) {
+        return a->getPrice() < b->getPrice();
     });
     qDebug() << "Продукты отсортированы по цене.";
 }
 
 void BuyerMenu::sortByName() {
-    sortProducts(products, [](const Product &a, const Product &b) {
-        return a.getName() < b.getName();
+    productManager.sortItems([](const Product *a, const Product *b) {
+        return a->getName() < b->getName();
     });
     qDebug() << "Продукты отсортированы по имени.";
 }
@@ -81,13 +97,13 @@ void BuyerMenu::setupDatabase() {
 
 void BuyerMenu::on_logOutButton_clicked() {
     SessionManager::logout();
-    cartMenu->clearCart(); // Очищаем корзину
+    cartMenu->clearCart();
     this->hide();
     emit secondWindow();
 }
 
 void BuyerMenu::loadProducts(sqlite3 *db) {
-    products.clear();
+    productManager.clear();
 
     std::string sqlSelect = "SELECT id, name, description, price, amount, seller_id, category_id, added_date FROM products;";
     sqlite3_stmt *stmt;
@@ -110,47 +126,54 @@ void BuyerMenu::loadProducts(sqlite3 *db) {
         const char *dateText = reinterpret_cast<const char *>(sqlite3_column_text(stmt, 7));
         std::string added_date = dateText ? dateText : "";
 
-        Product product(id, name, description, price, amount, seller_id, category_id, added_date);
-        products.push_back(product);
+        Product *product = new Product(id, name, description, price, amount, seller_id, category_id, added_date);
+        productManager.addItem(product);
     }
 
     sqlite3_finalize(stmt);
 
-    displaySortedProducts();
+    filteredProducts.clear();
+    filteredProducts.insert(filteredProducts.end(), productManager.getItems().begin(), productManager.getItems().end());
+
+    displayFilteredProducts();
 }
 
-void BuyerMenu::displaySortedProducts() {
+
+void BuyerMenu::displayFilteredProducts() {
     delete ui->scrollArea->widget();
 
     auto *container = new QWidget();
     auto *pBoxLayout = new QVBoxLayout(container);
 
-    for (const auto &product: products) {
-        auto *productWidget = new ProductItemWidget(product);
+    for (const auto &product : filteredProducts) {
+        auto *productWidget = new ProductItemWidget(*product);
+        productWidget->setPageForRole(false);
         productWidget->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
         productWidget->setMinimumHeight(250);
-        pBoxLayout->addWidget(productWidget);
+
         connect(productWidget, &ProductItemWidget::addItemToCart, this, [this](const Product &product) {
             cartMenu->addProductToCart(QString::fromStdString(product.getName()), 1, product.getPrice(), product.getId());
         });
+
+        pBoxLayout->addWidget(productWidget);
     }
+
     container->setLayout(pBoxLayout);
     ui->scrollArea->setWidget(container);
     container->adjustSize();
     container->setMinimumHeight(pBoxLayout->sizeHint().height());
 }
 
+
 void BuyerMenu::on_cartButton_clicked() {
-    cartMenu->loadCartItems();  // Загружаем товары в корзину
-    emit showCartMenu();  // Отправляем сигнал для открытия корзины
+    cartMenu->loadCartItems();
+    emit showCartMenu();
 }
 
 void BuyerMenu::showCart() {
-    // Здесь создается и показывается окно корзины
     CartMenu *cartMenu = new CartMenu();
     cartMenu->show();
 
-    // Подключаем сигнал возврата к покупкам
     connect(cartMenu, &CartMenu::backToShopping, this, &BuyerMenu::show);
 }
 

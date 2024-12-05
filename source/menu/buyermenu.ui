@@ -6,59 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>792</width>
-    <height>584</height>
+    <width>800</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QPushButton" name="categoryButton_3">
+  <widget class="QLineEdit" name="searchLineEdit">
    <property name="geometry">
     <rect>
-     <x>9</x>
-     <y>10</y>
-     <width>101</width>
-     <height>61</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Category</string>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">    QPushButton {
-        background-color: transparent;
-        color: white;
-        border: 1px solid #2e2e2e;
-        border-radius: 8px;
-        padding: 10px 20px;
-    }
-    QPushButton:hover {
-        border-color: #4e4e4e;
-    }
-    QPushButton:pressed {
-        background-color: #1e1e1e;
-}</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset theme="QIcon::ThemeIcon::FormatJustifyLeft"/>
-   </property>
-   <property name="iconSize">
-    <size>
-     <width>39</width>
-     <height>39</height>
-    </size>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="lineEdit">
-   <property name="geometry">
-    <rect>
-     <x>120</x>
+     <x>130</x>
      <y>20</y>
-     <width>421</width>
+     <width>651</width>
      <height>41</height>
     </rect>
    </property>
@@ -82,49 +42,12 @@
     <string>     Поиск товара по названию</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="favouriteButton">
-   <property name="geometry">
-    <rect>
-     <x>548</x>
-     <y>19</y>
-     <width>123</width>
-     <height>42</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>11</pointsize>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="cursor">
-    <cursorShape>PointingHandCursor</cursorShape>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">    QPushButton {
-        background-color: transparent;
-        color: white;
-        border: 1px solid #2e2e2e;
-        border-radius: 8px;
-        padding: 10px 20px;
-    }
-    QPushButton:hover {
-        border-color: #4e4e4e;
-    }
-    QPushButton:pressed {
-        background-color: #1e1e1e;
-}</string>
-   </property>
-   <property name="text">
-    <string>Избранное</string>
-   </property>
-  </widget>
   <widget class="QPushButton" name="cartButton">
    <property name="geometry">
     <rect>
-     <x>677</x>
-     <y>19</y>
-     <width>104</width>
+     <x>10</x>
+     <y>70</y>
+     <width>111</width>
      <height>42</height>
     </rect>
    </property>
@@ -139,7 +62,7 @@
    </property>
    <property name="styleSheet">
     <string notr="true">    QPushButton {
-        background-color: transparent;
+        background-color: #1B1B19;
         color: white;
         border: 1px solid #2e2e2e;
         border-radius: 8px;
@@ -159,10 +82,10 @@
   <widget class="QPushButton" name="logOutButton">
    <property name="geometry">
     <rect>
-     <x>9</x>
-     <y>541</y>
-     <width>101</width>
-     <height>42</height>
+     <x>10</x>
+     <y>20</y>
+     <width>111</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="font">
@@ -173,7 +96,7 @@
    </property>
    <property name="styleSheet">
     <string notr="true">    QPushButton {
-        background-color: transparent;
+        background-color: #1B1B19;
         color: white;
         border: 1px solid #2e2e2e;
         border-radius: 8px;
@@ -193,10 +116,10 @@
   <widget class="QScrollArea" name="scrollArea">
    <property name="geometry">
     <rect>
-     <x>120</x>
+     <x>130</x>
      <y>70</y>
-     <width>661</width>
-     <height>511</height>
+     <width>651</width>
+     <height>521</height>
     </rect>
    </property>
    <property name="widgetResizable">
@@ -207,13 +130,13 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>659</width>
-      <height>509</height>
+      <width>649</width>
+      <height>519</height>
      </rect>
     </property>
     <property name="minimumSize">
      <size>
-      <width>659</width>
+      <width>150</width>
       <height>0</height>
      </size>
     </property>
@@ -226,10 +149,10 @@
     <widget class="QScrollBar" name="verticalScrollBar">
      <property name="geometry">
       <rect>
-       <x>640</x>
-       <y>-1</y>
+       <x>630</x>
+       <y>0</y>
        <width>20</width>
-       <height>511</height>
+       <height>481</height>
       </rect>
      </property>
      <property name="orientation">
@@ -240,9 +163,9 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>50</y>
-       <width>631</width>
-       <height>451</height>
+       <y>10</y>
+       <width>621</width>
+       <height>501</height>
       </rect>
      </property>
      <layout class="QGridLayout" name="gridLayout"/>
@@ -253,8 +176,8 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>80</y>
-     <width>101</width>
+     <y>120</y>
+     <width>111</width>
      <height>41</height>
     </rect>
    </property>

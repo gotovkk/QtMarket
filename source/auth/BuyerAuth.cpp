@@ -101,26 +101,34 @@ bool BuyerAuth::login(sqlite3 *db, const std::string &name, const std::string &p
             }
 
             int buyerId = sqlite3_column_int(stmt, 0);
+
             SessionManager::setCurrentUserId(buyerId);
 
             sqlite3_finalize(stmt);
-            qDebug() << "Вход выполнен успешно!";
-            return true;
 
+            // Логирование успешной авторизации
+            qDebug() << "Вход выполнен успешно!";
+
+            // Возвращаем true при успешной авторизации
+            return true;
         } else {
+            // Покупатель не найден
             sqlite3_finalize(stmt);
             throw UnauthorizedException("Покупатель не найден");
         }
 
     } catch (const UnauthorizedException &ex) {
+        // Обработка исключения в случае неправильного пароля или отсутствия покупателя
         qDebug() << "Ошибка авторизации: " << ex.what();
         QMessageBox::warning(nullptr, "Ошибка авторизации", QString::fromStdString(ex.what()));
         return false;
     } catch (const SQLException &ex) {
+        // Обработка ошибок работы с базой данных
         qDebug() << "Ошибка SQL: " << ex.what();
         QMessageBox::critical(nullptr, "Ошибка базы данных", QString::fromStdString(ex.what()));
         return false;
     } catch (const std::exception &ex) {
+        // Обработка других исключений
         qDebug() << "Общая ошибка: " << ex.what();
         QMessageBox::critical(nullptr, "Ошибка", QString::fromStdString(ex.what()));
         return false;

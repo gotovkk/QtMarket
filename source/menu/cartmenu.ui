@@ -172,15 +172,34 @@ QPushButton:hover {
         <property name="geometry">
          <rect>
           <x>9</x>
-          <y>9</y>
+          <y>19</y>
           <width>551</width>
-          <height>451</height>
+          <height>441</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout"/>
        </widget>
       </widget>
      </widget>
+    </widget>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>321</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Корзина товаров</string>
+     </property>
     </widget>
    </widget>
    <widget class="QWidget" name="page_2"/>

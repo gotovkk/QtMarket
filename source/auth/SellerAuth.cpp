@@ -1,23 +1,23 @@
 #include "SellerAuth.h"
+#include "SessionManager.h"
+#include "../../include/ui/sellermenu.h"
 
-bool SellerAuth::registerSeller(
-        sqlite3 *db, const std::string &username, const std::string &password,
-        const std::string &email, const std::string &phone_num, int &seller_id) const {
+bool SellerAuth::registerSeller(sqlite3 *db, const std::string &username, const std::string &password,
+                                const std::string &email, const std::string &phone_num, int &seller_id) const {
 
     const char *sqlCheckTable = "SELECT name FROM sqlite_master WHERE type='table' AND name='sellers';";
     sqlite3_stmt *stmtCheckTable;
 
     if (sqlite3_prepare_v2(db, sqlCheckTable, -1, &stmtCheckTable, nullptr) == SQLITE_OK) {
         if (sqlite3_step(stmtCheckTable) != SQLITE_ROW) {
-            const char *sqlCreateTable =
-                    "CREATE TABLE sellers ("
-                    "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    "username TEXT NOT NULL UNIQUE, "
-                    "password_hash TEXT NOT NULL, "
-                    "email TEXT NOT NULL, "
-                    "phone_num TEXT NOT NULL, "
-                    "reg_date DATETIME DEFAULT CURRENT_TIMESTAMP"
-                    ");";
+            const char *sqlCreateTable = "CREATE TABLE sellers ("
+                                         "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                                         "username TEXT NOT NULL UNIQUE, "
+                                         "password_hash TEXT NOT NULL, "
+                                         "email TEXT NOT NULL, "
+                                         "phone_num TEXT NOT NULL, "
+                                         "reg_date DATETIME DEFAULT CURRENT_TIMESTAMP"
+                                         ");";
 
             char *errMsg = nullptr;
             if (int rc = sqlite3_exec(db, sqlCreateTable, nullptr, nullptr, &errMsg); rc != SQLITE_OK) {
@@ -66,6 +66,8 @@ bool SellerAuth::registerSeller(
         }
 
         seller_id = static_cast<int>(sqlite3_last_insert_rowid(db));
+        sqlite3_finalize(stmt);
+
     } else {
         qDebug() << "Ошибка подготовки SQL-запроса INSERT: " << sqlite3_errmsg(db);
         return false;
@@ -78,7 +80,7 @@ bool SellerAuth::registerSeller(
 
 
 bool SellerAuth::login(sqlite3 *db, const std::string &username, const std::string &password) const {
-    std::string sqlSelect = "SELECT password_hash FROM sellers WHERE username = ?;";
+    std::string sqlSelect = "SELECT id, password_hash FROM sellers WHERE username = ?;";
     sqlite3_stmt *stmt;
 
     if (sqlite3_prepare_v2(db, sqlSelect.c_str(), -1, &stmt, nullptr) != SQLITE_OK) {
@@ -93,12 +95,25 @@ bool SellerAuth::login(sqlite3 *db, const std::string &username, const std::stri
 
     int stepResult = sqlite3_step(stmt);
     if (stepResult == SQLITE_ROW) {
-        const char *storedPassword = reinterpret_cast<const char *>(sqlite3_column_text(stmt, 0));
+        const char *storedPassword = reinterpret_cast<const char *>(sqlite3_column_text(stmt, 1));
+
         if (storedPassword) {
+            int sellerId = sqlite3_column_int(stmt, 0);
+
             qDebug() << "Извлеченный пароль: " << storedPassword;
             if (std::string(storedPassword) == password) {
-                qDebug() << "Вход выполнен успешно!";
-                loginSuccess = true;
+                int sellerId = sqlite3_column_int(stmt, 0);
+
+                // Установите `sellerId` в `SessionManager`
+                SessionManager::setCurrentUserId(sellerId);
+
+                // Не создавайте объект `SellerMenu` локально в функции login
+                qDebug() << "Пользователь успешно вошел. ID продавца: " << sellerId;
+
+                sqlite3_finalize(stmt);
+
+                // Верните `true` для дальнейшего использования
+                return true;
             } else {
                 qDebug() << "Неправильный пароль!";
                 QMessageBox::warning(nullptr, "Ошибка", "Неправильный пароль!");
@@ -116,5 +131,10 @@ bool SellerAuth::login(sqlite3 *db, const std::string &username, const std::stri
     }
 
     sqlite3_finalize(stmt);
+
+    if (!loginSuccess) {
+        SessionManager::logout();
+    }
+
     return loginSuccess;
 }

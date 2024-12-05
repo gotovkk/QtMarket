@@ -9,9 +9,11 @@
 #include "cartitemwidget.h"
 #include "../../source/database/DatabaseLoader.h"
 #include "../../../sqlite/sqlite3.h"
-#include "../Cart.h"
+#include "../ProductListManager.h"
 #include "../../source/database/CartDatabase.h"
 #include "../../source/exception/Exceptions.h"
+#include "../../source/report/reportpage.h"
+
 
 namespace Ui {
     class CartMenu;
@@ -37,6 +39,8 @@ public:
 
     void clearCart();
 
+    void addProductToUI(const QString &name, int quantity, double price, int productId);
+
     void loadCartItems();
 
     QString getProductNameById(int productId);
@@ -52,11 +56,12 @@ signals:
 
     void backToShopping();
 
+
 private slots:
 
     void onBackToShoppingClicked();
 
-    void createOrder();  // Метод для создания заказа
+    void createOrder();
 
 private:
     void addProductToOrder(int orderId, CartItemWidget *item);
@@ -64,7 +69,8 @@ private:
     Ui::CartMenu *ui;
     QVBoxLayout *itemsLayout;
     CartDatabase *cartDatabase;
-    Cart<CartItemWidget *> *cart;
+    ProductListManager<CartItemWidget *> *cart;
+
 
     sqlite3 *db;
     SqlErrorHandler sqlErrorHandler;

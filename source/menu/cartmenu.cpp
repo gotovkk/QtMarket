@@ -2,20 +2,19 @@
 #include "ui_cartmenu.h"
 #include "../auth/SessionManager.h"
 
-CartMenu::CartMenu(QWidget *parent, sqlite3 *dbConnection)
-        : QWidget(parent),
-          ui(new Ui::CartMenu),
-          db(dbConnection),
-          sqlErrorHandler(dbConnection),
-          cart(new Cart<CartItemWidget *>) {
+CartMenu::CartMenu(QWidget *parent, sqlite3 *dbConnection) : QWidget(parent), ui(new Ui::CartMenu), db(dbConnection),
+                                                             sqlErrorHandler(dbConnection),
+                                                             cart(new ProductListManager<CartItemWidget *>) {
     ui->setupUi(this);
 
     setupDatabase();
     itemsLayout = new QVBoxLayout(ui->scrollArea->widget());
     ui->scrollArea->widget()->setLayout(itemsLayout);
 
+
     connect(ui->backButton, &QPushButton::clicked, this, &CartMenu::onBackToShoppingClicked);
     connect(ui->orderButton, &QPushButton::clicked, this, &CartMenu::createOrder);
+
     loadCartItems();
 }
 
@@ -23,6 +22,8 @@ CartMenu::~CartMenu() {
     delete ui;
     delete cart;
 }
+
+
 
 void CartMenu::setupDatabase() {
     int rc = sqlite3_open("C:/Users/anima/CLionProjects/QtHydraMarket/mydb.db", &db);
@@ -55,7 +56,6 @@ void CartMenu::addProductToCart(const QString &name, int quantity, double price,
     checkAuthentication();
 
     int buyerId = SessionManager::getCurrentUserId();
-
     insertProductToCart(buyerId, productId, quantity, price);
 
     updateTotalPrice();
@@ -67,6 +67,24 @@ void CartMenu::checkAuthentication() {
         qDebug() << "Покупатель не авторизован!";
         throw Exceptions("Покупатель не авторизован!");
     }
+}
+
+void CartMenu::addProductToUI(const QString &name, int quantity, double price, int productId) {
+    for (CartItemWidget *existingItem: cart->getItems()) {
+        if (existingItem->getProductId() == productId) {
+            qDebug() << "Товар уже отображается в корзине!";
+            return;
+        }
+    }
+
+    CartItemWidget *item = new CartItemWidget(name, quantity, price, productId, this);
+    cart->addItem(item);
+    itemsLayout->addWidget(item);
+
+    connect(item, &CartItemWidget::removeItem, this, &CartMenu::removeProductFromCart);
+    connect(item, &CartItemWidget::quantityChanged, this, &CartMenu::updateTotalPrice);
+
+    updateTotalPrice();
 }
 
 void CartMenu::insertProductToCart(int buyerId, int productId, int quantity, double price) {
@@ -102,7 +120,7 @@ void CartMenu::removeProductFromCart(CartItemWidget *item) {
         sqlite3_stmt *stmt;
 
         if (sqlite3_prepare_v2(db, sqlDelete.c_str(), -1, &stmt, nullptr) != SQLITE_OK) {
-            sqlErrorHandler.handleError("Ошибка при удалении товара");
+            sqlErrorHandler.handleError("Ошибка при подготовке SQL-запроса для удаления товара");
             return;
         }
 
@@ -110,23 +128,25 @@ void CartMenu::removeProductFromCart(CartItemWidget *item) {
         sqlite3_bind_int(stmt, 2, productId);
 
         if (sqlite3_step(stmt) != SQLITE_DONE) {
-            sqlErrorHandler.handleError("Ошибка при удалении товара из базы данных");
+            sqlErrorHandler.handleError("Ошибка при выполнении SQL-запроса для удаления товара");
         } else {
-            qDebug() << "Товар удален из базы данных.";
+            qDebug() << "Товар успешно удален из базы данных.";
         }
 
         sqlite3_finalize(stmt);
     }
+
     itemsLayout->removeWidget(item);
-    cart->removeItem(item);
     item->deleteLater();
+    cart->removeItem(item);
 
     updateTotalPrice();
 }
 
-
 void CartMenu::updateTotalPrice() {
-    double total = cart->calculateTotalPrice();
+    double total = cart->calculateTotalPrice([](CartItemWidget *item) {
+        return item->getTotalPrice();
+    });
     ui->totalPriceLabel->setText(QString("Итого: %1 руб.").arg(total, 0, 'f', 2));
 }
 
@@ -136,14 +156,16 @@ QList<CartItemWidget *> CartMenu::getCartItems() const {
 
 void CartMenu::createOrder() {
     try {
-        checkAuthentication(); // Проверяем авторизацию
+        checkAuthentication();
     } catch (const UnauthorizedException &e) {
         qDebug() << "Ошибка: " << e.what();
         return;
     }
 
-    double totalPrice = cart->calculateTotalPrice();
 
+    double totalPrice = cart->calculateTotalPrice([](CartItemWidget *item) {
+        return item->getTotalPrice();
+    });
     std::string sqlInsertOrder = "INSERT INTO orders (buyer_id, status, total_price) VALUES (?, ?, ?);";
     sqlite3_stmt *stmt;
     if (sqlite3_prepare_v2(db, sqlInsertOrder.c_str(), -1, &stmt, nullptr) != SQLITE_OK) {
@@ -219,12 +241,13 @@ void CartMenu::loadCartItems() {
         double price = sqlite3_column_double(stmt, 2);
 
         QString name = getProductNameById(productId);
-        addProductToCart(name, quantity, price, productId);
+        addProductToUI(name, quantity, price, productId);  // Использовать новый метод
     }
 
     sqlite3_finalize(stmt);
     updateTotalPrice();
 }
+
 
 QString CartMenu::getProductNameById(int productId) {
     std::string sqlSelectProduct = "SELECT name FROM products WHERE id = ?;";
