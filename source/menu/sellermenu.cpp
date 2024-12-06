@@ -1,9 +1,6 @@
 #include "ui_sellermenu.h"
 #include "../../include/ui/registerwindow.h"
-#include "../../include/ui/mainwindow.h"
 #include <iostream>
-#include "../auth/SessionManager.h"
-#include "../../include/ui/sellermenu.h"
 
 
 SellerMenu::SellerMenu(QWidget *parent) : QWidget(parent), ui(new Ui::SellerMenu), orderWindow(nullptr) {
@@ -155,7 +152,6 @@ void SellerMenu::onDeleteItem(int productId, ProductItemWidget *productWidget) {
         return;
     }
 
-    // Подготовка SQL-запроса
     std::string sqlDelete = "DELETE FROM products WHERE id = ?;";
     sqlite3_stmt *stmt;
 
@@ -164,14 +160,12 @@ void SellerMenu::onDeleteItem(int productId, ProductItemWidget *productWidget) {
         return;
     }
 
-    // Привязка ID товара
     if (sqlite3_bind_int(stmt, 1, productId) != SQLITE_OK) {
         qDebug() << "Ошибка при привязке параметра ID товара: " << sqlite3_errmsg(db);
         sqlite3_finalize(stmt);
         return;
     }
 
-    // Выполнение запроса
     if (sqlite3_step(stmt) == SQLITE_DONE) {
         qDebug() << "Товар с ID " << productId << " успешно удалён из базы данных.";
     } else {
@@ -191,12 +185,10 @@ void SellerMenu::onDeleteItem(int productId, ProductItemWidget *productWidget) {
         qDebug() << "Товар с ID " << productId << " не найден в productManager.";
     }
 
-    // Удаление виджета из интерфейса
     if (productWidget) {
         productWidget->deleteLater();
     }
 
-    // Обновление интерфейса
     displaySortedProducts();
 }
 
@@ -211,33 +203,32 @@ void SellerMenu::on_addProductButton_clicked() {
     this->close();
 }
 
-void SellerMenu::on_orderButton_clicked() {
-
-    ui->orderButton->setVisible(false);
-    ui->addProductButton->setVisible(false);
-    ui->reportButton->setVisible(false);
-    if (!orderWindow) {
-        orderWindow = new sellerorder(this);
-    }
-
-    orderWindow->setVisible(true);
-
-}
+//void SellerMenu::on_orderButton_clicked() {
+//
+//    ui->orderButton->setVisible(false);
+//    ui->addProductButton->setVisible(false);
+//    ui->reportButton->setVisible(false);
+//    if (!orderWindow) {
+//        orderWindow = new sellerorder(this);
+//    }
+//
+//    orderWindow->setVisible(true);
+//
+//}
 
 void SellerMenu::onBackToSellerMenu() {
     qDebug() << "Вернулись в меню продавца, скрываем окно заказов и показываем кнопки.";
 
     if (orderWindow) {
         qDebug() << "Скрываем окно заказов.";
-        orderWindow->hide();  // Скрываем окно заказов
+        orderWindow->hide();
     }
 
-    // Показываем кнопки снова
     ui->orderButton->setVisible(true);
     ui->addProductButton->setVisible(true);
     ui->reportButton->setVisible(true);
 
     qDebug() << "Показаны кнопки меню продавца.";
 
-    this->setVisible(true);  // Показываем меню продавца
+    this->setVisible(true);
 }
