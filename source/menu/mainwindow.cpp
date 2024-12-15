@@ -3,7 +3,6 @@
 //
 #include "../../include/ui/mainwindow.h"
 #include "ui_mainwindow.h"
-#include "../auth/SessionManager.h"
 #include <iostream>
 #include <QString>
 #include <regex>

@@ -1,6 +1,5 @@
 #include "ui_buyermenu.h"
 #include "../../include/ui/buyermenu.h"
-#include "../auth/SessionManager.h"
 #include <iostream>
 
 BuyerMenu::BuyerMenu(QWidget *parent) : QWidget(parent), ui(new Ui::BuyerMenu), sortByPrice(true) {

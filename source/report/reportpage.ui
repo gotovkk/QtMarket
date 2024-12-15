@@ -13,38 +13,6 @@
   <property name="windowTitle">
    <string>reportpage</string>
   </property>
-  <widget class="QGroupBox" name="groupBox_2">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>50</y>
-     <width>101</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="title">
-    <string/>
-   </property>
-   <widget class="QRadioButton" name="jsonRadioButton">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>0</y>
-      <width>71</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>12</pointsize>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string>JSON</string>
-    </property>
-   </widget>
-  </widget>
   <widget class="QPushButton" name="generateReportButton">
    <property name="geometry">
     <rect>
@@ -99,7 +67,7 @@
     <rect>
      <x>0</x>
      <y>150</y>
-     <width>161</width>
+     <width>171</width>
      <height>41</height>
     </rect>
    </property>
@@ -150,20 +118,20 @@
   <widget class="QDateEdit" name="startDateEdit">
    <property name="geometry">
     <rect>
-     <x>140</x>
-     <y>40</y>
-     <width>161</width>
-     <height>21</height>
+     <x>0</x>
+     <y>30</y>
+     <width>171</width>
+     <height>41</height>
     </rect>
    </property>
   </widget>
   <widget class="QDateEdit" name="endDateEdit">
    <property name="geometry">
     <rect>
-     <x>140</x>
-     <y>60</y>
-     <width>161</width>
-     <height>22</height>
+     <x>0</x>
+     <y>80</y>
+     <width>171</width>
+     <height>41</height>
     </rect>
    </property>
   </widget>

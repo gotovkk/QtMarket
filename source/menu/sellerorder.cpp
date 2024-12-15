@@ -13,7 +13,6 @@ sellerorder::sellerorder(QWidget *parent) :
     ordersTable->setSelectionBehavior(QAbstractItemView::SelectRows);
     ordersTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-    // Установка стилей для таблицы
     ordersTable->setStyleSheet("QTableWidget {"
                                "border: 1px solid #ccc;"
                                "border-radius: 5px;"
@@ -32,7 +31,6 @@ sellerorder::sellerorder(QWidget *parent) :
                                "border-bottom: 1px solid #ddd;"
                                "}");
 
-    // Поиск и фильтры
     searchField = new QLineEdit(this);
     searchField->setPlaceholderText("Поиск по названию товара");
     searchField->setStyleSheet("QLineEdit {"
@@ -71,7 +69,6 @@ sellerorder::sellerorder(QWidget *parent) :
                                  "font-size: 12pt;"
                                  "}");
 
-    // Кнопки с новым дизайном
     refreshButton = new QPushButton("Обновить", this);
     refreshButton->setStyleSheet("QPushButton {"
                                  "background-color: #bdc3c7;"
@@ -108,7 +105,7 @@ sellerorder::sellerorder(QWidget *parent) :
                               "background-color: #95a5a6;"
                               "}");
 
-    // Макет для фильтров
+
     auto *layout = new QVBoxLayout(this);
     auto *filterLayout = new QHBoxLayout();
     filterLayout->addWidget(new QLabel("Поиск:"));
@@ -126,21 +123,18 @@ sellerorder::sellerorder(QWidget *parent) :
     layout->addWidget(markCompletedButton);
     layout->addWidget(backButton);
 
-    // Связывание кнопок с функциями
     connect(refreshButton, &QPushButton::clicked, this, &sellerorder::refreshOrders);
     connect(markCompletedButton, &QPushButton::clicked, this, &sellerorder::markOrderAsCompleted);
     connect(backButton, &QPushButton::clicked, this, &sellerorder::backToSellerMenu);
 
-    // Установка монотонного серого фона для всего окна
     setStyleSheet("QWidget {"
-                  "background-color: #d3d3d3;"  // Серый цвет фона
+                  "background-color: #d3d3d3;"
                   "font-family: Arial, sans-serif;"
                   "}"
                   "QWidget#sellerorder {"
-                  "background-color: #d3d3d3;"  // Серый цвет фона для виджета
+                  "background-color: #d3d3d3;"
                   "}");
 
-    // Подгонка ширины столбцов
 }
 
 sellerorder::~sellerorder() {
@@ -149,23 +143,21 @@ sellerorder::~sellerorder() {
 
 
 void sellerorder::backToSellerMenu() {
-    qDebug() << "backButton был нажать, возвращаемся в меню продавца.";  // Отладка
+    qDebug() << "backButton был нажать, возвращаемся в меню продавца.";
 
-    this->hide();  // Скрыть окно заказов
-    emit backToMenu();  // Сигнал для возврата в меню продавца
+    this->hide();
+    emit backToMenu();
 
-    qDebug() << "Меню продавца должно быть теперь показано.";  // Отладка
+    qDebug() << "Меню продавца должно быть теперь показано.";
 }
 void sellerorder::filterOrders() {
     qDebug() << "Фильтрация заказов";
 }
 
 void sellerorder::markOrderAsCompleted() {
-    // Пометить выбранный заказ как выполненный
     qDebug() << "Заказ помечен как выполненный";
 }
 
 void sellerorder::refreshOrders() {
-    // Обновить список заказов
     qDebug() << "Список заказов обновлен";
 }

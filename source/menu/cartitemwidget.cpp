@@ -12,10 +12,8 @@ CartItemWidget::CartItemWidget(const QString &name, int quantity, double price, 
           quantity(quantity),
           pricePerUnit(price),
           productId(productId) {
-    // Устанавливаем фиксированный размер для основного виджета
-    setFixedSize(500, 50); // Ширина 400px, высота 50px
+    setFixedSize(500, 50);
 
-    // Создаем виджеты
     nameLabel = new QLabel(productName, this);
     nameLabel->setStyleSheet("font-weight: bold; font-size: 12px; color: white;");
     nameLabel->setFixedSize(180, 30);
@@ -36,7 +34,7 @@ CartItemWidget::CartItemWidget(const QString &name, int quantity, double price, 
             padding: 2px;
         }
     )");
-    quantitySpinBox->setFixedSize(100, 30); // Фиксированный размер
+    quantitySpinBox->setFixedSize(100, 30);
 
     removeButton = new QPushButton("Удалить", this);
     removeButton->setStyleSheet(R"(
@@ -55,9 +53,8 @@ CartItemWidget::CartItemWidget(const QString &name, int quantity, double price, 
             background-color: #aa3333;
         }
     )");
-    removeButton->setFixedSize(80, 30); // Фиксированный размер
+    removeButton->setFixedSize(80, 30);
 
-    // Компоновка
     QHBoxLayout *layout = new QHBoxLayout(this);
     layout->setContentsMargins(10, 10, 10, 10);
     layout->setSpacing(10);
@@ -68,7 +65,6 @@ CartItemWidget::CartItemWidget(const QString &name, int quantity, double price, 
 
     setLayout(layout);
 
-    // Устанавливаем стиль для основного виджета
     setStyleSheet(R"(
         QWidget {
             background-color: #555; /* Серый фон */
@@ -77,7 +73,6 @@ CartItemWidget::CartItemWidget(const QString &name, int quantity, double price, 
         }
     )");
 
-    // Подключение сигналов
     connect(removeButton, &QPushButton::clicked, this, [=]() {
         emit removeItem(this); // Генерируем сигнал "удалить элемент"
     });
@@ -94,7 +89,6 @@ QString CartItemWidget::getProductName() const {
     return productName;
 }
 
-// Получить ID продукта
 int CartItemWidget::getProductId() const {
     return productId;
 }
@@ -104,9 +98,9 @@ double CartItemWidget::getUnitPrice() const {
 }
 
 void CartItemWidget::onQuantityChanged(int newQuantity) {
-    quantity = newQuantity; // Обновляем количество
-    updateTotalPrice();     // Пересчитываем общую цену
-    emit quantityChanged(getTotalPrice()); // Генерируем сигнал с обновленной ценой
+    quantity = newQuantity;
+    updateTotalPrice();
+    emit quantityChanged(getTotalPrice());
 }
 
 int CartItemWidget::getQuantity() const {
@@ -115,12 +109,12 @@ int CartItemWidget::getQuantity() const {
 
 void CartItemWidget::setQuantity(int newQuantity) {
     if (newQuantity <= 0) {
-        emit removeItem(this); // Если количество <= 0, удаляем элемент
+        emit removeItem(this);
         return;
     }
 
-    quantitySpinBox->setValue(newQuantity); // Устанавливаем значение в SpinBox
-    updateTotalPrice();                     // Обновляем общую стоимость
+    quantitySpinBox->setValue(newQuantity);
+    updateTotalPrice();
 }
 
 void CartItemWidget::updateTotalPrice() {

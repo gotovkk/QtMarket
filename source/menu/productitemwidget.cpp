@@ -1,7 +1,6 @@
 #include "ui_productitemwidget.h"
 #include "../../include/ui/productitemwidget.h"
 #include <QHBoxLayout>
-#include <QVBoxLayout>
 #include <QPushButton>
 #include <QLabel>
 
@@ -99,10 +98,8 @@ void ProductItemWidget::setupSellerPage() {
 
 void ProductItemWidget::setPageForRole(bool isSeller) {
     if (isSeller) {
-        // ui->stackedWidget->setCurrentIndex(0);
         setupSellerPage();
     } else {
-//ui->stackedWidget->setCurrentIndex(1);
         setupBuyerPage();
     }
 }

@@ -104,15 +104,12 @@ bool SellerAuth::login(sqlite3 *db, const std::string &username, const std::stri
             if (std::string(storedPassword) == password) {
                 int sellerId = sqlite3_column_int(stmt, 0);
 
-                // Установите `sellerId` в `SessionManager`
                 SessionManager::setCurrentUserId(sellerId);
 
-                // Не создавайте объект `SellerMenu` локально в функции login
                 qDebug() << "Пользователь успешно вошел. ID продавца: " << sellerId;
 
                 sqlite3_finalize(stmt);
 
-                // Верните `true` для дальнейшего использования
                 return true;
             } else {
                 qDebug() << "Неправильный пароль!";

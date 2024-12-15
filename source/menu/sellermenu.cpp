@@ -13,7 +13,6 @@ SellerMenu::SellerMenu(QWidget *parent) : QWidget(parent), ui(new Ui::SellerMenu
     report->hide();
 
     connect(ui->orderButton, &QPushButton::clicked, this, &SellerMenu::openSellerOrder);
-    connect(ui->orderButton, &QPushButton::clicked, this, &SellerMenu::on_orderButton_clicked);
     connect(orderWindow, &sellerorder::backToMenu, this, &SellerMenu::onBackToSellerMenu);
     connect(addProductWindow, &AddProduct::addProductWindow, this, &SellerMenu::show);
     connect(backToBuyersWindow, &AddProduct::addProductWindow, this, &SellerMenu::show);
@@ -145,7 +144,6 @@ void SellerMenu::displaySortedProducts() {
 
 }
 
-
 void SellerMenu::onDeleteItem(int productId, ProductItemWidget *productWidget) {
     if (productId == -1) {
         qDebug() << "Некорректный ID товара.";
@@ -202,19 +200,6 @@ void SellerMenu::on_addProductButton_clicked() {
     addProductWindow->show();
     this->close();
 }
-
-//void SellerMenu::on_orderButton_clicked() {
-//
-//    ui->orderButton->setVisible(false);
-//    ui->addProductButton->setVisible(false);
-//    ui->reportButton->setVisible(false);
-//    if (!orderWindow) {
-//        orderWindow = new sellerorder(this);
-//    }
-//
-//    orderWindow->setVisible(true);
-//
-//}
 
 void SellerMenu::onBackToSellerMenu() {
     qDebug() << "Вернулись в меню продавца, скрываем окно заказов и показываем кнопки.";

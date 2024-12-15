@@ -57,8 +57,6 @@ private slots:
 
     void on_reportButton_clicked();
 
-    void on_orderButton_clicked();
-
     void onBackToSellerMenu();
 
 

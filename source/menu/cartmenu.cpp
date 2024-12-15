@@ -1,6 +1,5 @@
 #include "../../include/ui/cartmenu.h"
 #include "ui_cartmenu.h"
-#include "../auth/SessionManager.h"
 
 CartMenu::CartMenu(QWidget *parent, sqlite3 *dbConnection) : QWidget(parent), ui(new Ui::CartMenu), db(dbConnection),
                                                              sqlErrorHandler(dbConnection),
@@ -162,7 +161,6 @@ void CartMenu::createOrder() {
         return;
     }
 
-
     double totalPrice = cart->calculateTotalPrice([](CartItemWidget *item) {
         return item->getTotalPrice();
     });
@@ -241,7 +239,7 @@ void CartMenu::loadCartItems() {
         double price = sqlite3_column_double(stmt, 2);
 
         QString name = getProductNameById(productId);
-        addProductToUI(name, quantity, price, productId);  // Использовать новый метод
+        addProductToUI(name, quantity, price, productId);
     }
 
     sqlite3_finalize(stmt);

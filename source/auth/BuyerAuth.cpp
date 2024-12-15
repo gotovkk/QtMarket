@@ -6,7 +6,6 @@ bool BuyerAuth::registerBuyer(sqlite3 *db, const std::string &name, const std::s
     SqlErrorHandler errorHandler(db);
 
     try {
-        // Проверка существования таблицы
         const char *sqlCheckTable = "SELECT name FROM sqlite_master WHERE type='table' AND name='buyers';";
         sqlite3_stmt *stmtCheckTable;
 
@@ -34,7 +33,6 @@ bool BuyerAuth::registerBuyer(sqlite3 *db, const std::string &name, const std::s
         }
         sqlite3_finalize(stmtCheckTable);
 
-        // Проверка на уникальность имени
         std::string sqlSelect = "SELECT COUNT(*) FROM buyers WHERE name = ?;";
         sqlite3_stmt *stmt;
 
@@ -49,7 +47,6 @@ bool BuyerAuth::registerBuyer(sqlite3 *db, const std::string &name, const std::s
         }
         sqlite3_finalize(stmt);
 
-        // Вставка нового покупателя
         std::string sqlInsert = "INSERT INTO buyers (name, password_hash, email) VALUES (?, ?, ?);";
 
         if (sqlite3_prepare_v2(db, sqlInsert.c_str(), -1, &stmt, nullptr) != SQLITE_OK) {
@@ -106,29 +103,23 @@ bool BuyerAuth::login(sqlite3 *db, const std::string &name, const std::string &p
 
             sqlite3_finalize(stmt);
 
-            // Логирование успешной авторизации
             qDebug() << "Вход выполнен успешно!";
 
-            // Возвращаем true при успешной авторизации
             return true;
         } else {
-            // Покупатель не найден
             sqlite3_finalize(stmt);
             throw UnauthorizedException("Покупатель не найден");
         }
 
     } catch (const UnauthorizedException &ex) {
-        // Обработка исключения в случае неправильного пароля или отсутствия покупателя
         qDebug() << "Ошибка авторизации: " << ex.what();
         QMessageBox::warning(nullptr, "Ошибка авторизации", QString::fromStdString(ex.what()));
         return false;
     } catch (const SQLException &ex) {
-        // Обработка ошибок работы с базой данных
         qDebug() << "Ошибка SQL: " << ex.what();
         QMessageBox::critical(nullptr, "Ошибка базы данных", QString::fromStdString(ex.what()));
         return false;
     } catch (const std::exception &ex) {
-        // Обработка других исключений
         qDebug() << "Общая ошибка: " << ex.what();
         QMessageBox::critical(nullptr, "Ошибка", QString::fromStdString(ex.what()));
         return false;

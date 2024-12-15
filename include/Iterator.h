@@ -31,7 +31,6 @@ public:
         return current == other.current;
     }
 
-    // Новый оператор вычитания
     std::ptrdiff_t operator-(const Iterator &other) const {
         return std::distance(other.current, current);
     }
