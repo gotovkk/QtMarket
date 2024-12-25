@@ -16,7 +16,6 @@ find_package(Qt6 COMPONENTS
         Widgets
         REQUIRED)
 
-# Указываем путь к vcpkg
 set(CMAKE_TOOLCHAIN_FILE "C:/Users/anima/.vcpkg-clion/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
 set(nlohmann_json_DIR "C:/Users/anima/.vcpkg-clion/vcpkg/installed/x64-mingw-dynamic/share/nlohmann_json")
 
@@ -24,7 +23,6 @@ set(nlohmann_json_DIR "C:/Users/anima/.vcpkg-clion/vcpkg/installed/x64-mingw-dyn
 find_package(nlohmann_json REQUIRED)
 
 
-# Создаем цель исполняемого файла
 add_executable(QtHydraMarket
         sqlite/sqlite3.c
         sqlite/sqlite3.h
@@ -96,6 +94,12 @@ add_executable(QtHydraMarket
         source/menu/sellerorder.ui
         include/Iterator.h
         include/ConstIterator.h
+        source/menu/buyerorders.cpp
+        include/ui/buyerorders.h
+        source/menu/buyerorders.ui
+        source/menu/orderitemwidget.cpp
+        source/menu/orderitemwidget.h
+        source/menu/orderitemwidget.ui
 )
 
 target_link_libraries(QtHydraMarket
@@ -105,10 +109,8 @@ target_link_libraries(QtHydraMarket
         nlohmann_json::nlohmann_json
 )
 
-# Включение ui файлов
-qt6_wrap_ui(UI_HEADERS ${UI_FILES})
+qt6_wrap_ui(UI_HEADER3S ${UI_FILES})
 
-# Копирование DLL для Windows (если необходимо)
 if (WIN32 AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
     set(DEBUG_SUFFIX)
     if (MSVC AND CMAKE_BUILD_TYPE MATCHES "Debug")

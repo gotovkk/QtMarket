@@ -12,15 +12,15 @@ CartItemWidget::CartItemWidget(const QString &name, int quantity, double price, 
           quantity(quantity),
           pricePerUnit(price),
           productId(productId) {
-    setFixedSize(500, 50);
+    setFixedSize(750, 50);
 
     nameLabel = new QLabel(productName, this);
     nameLabel->setStyleSheet("font-weight: bold; font-size: 12px; color: white;");
-    nameLabel->setFixedSize(180, 30);
+    nameLabel->setFixedSize(250, 30);
 
     priceLabel = new QLabel(QString::number(getTotalPrice(), 'f', 2) + " руб.", this);
     priceLabel->setStyleSheet("color: white; font-size: 11px;");
-    priceLabel->setFixedSize(80, 30);
+    priceLabel->setFixedSize(50, 30);
 
     quantitySpinBox = new QSpinBox(this);
     quantitySpinBox->setRange(1, 99);
@@ -34,7 +34,7 @@ CartItemWidget::CartItemWidget(const QString &name, int quantity, double price, 
             padding: 2px;
         }
     )");
-    quantitySpinBox->setFixedSize(100, 30);
+    quantitySpinBox->setFixedSize(200, 30);
 
     removeButton = new QPushButton("Удалить", this);
     removeButton->setStyleSheet(R"(
@@ -53,7 +53,7 @@ CartItemWidget::CartItemWidget(const QString &name, int quantity, double price, 
             background-color: #aa3333;
         }
     )");
-    removeButton->setFixedSize(80, 30);
+    removeButton->setFixedSize(175, 30);
 
     QHBoxLayout *layout = new QHBoxLayout(this);
     layout->setContentsMargins(10, 10, 10, 10);
@@ -74,7 +74,7 @@ CartItemWidget::CartItemWidget(const QString &name, int quantity, double price, 
     )");
 
     connect(removeButton, &QPushButton::clicked, this, [=]() {
-        emit removeItem(this); // Генерируем сигнал "удалить элемент"
+        emit removeItem(this);
     });
 
     connect(quantitySpinBox, QOverload<int>::of(&QSpinBox::valueChanged), this, &CartItemWidget::onQuantityChanged);

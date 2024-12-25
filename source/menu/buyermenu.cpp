@@ -90,7 +90,6 @@ void BuyerMenu::setupDatabase() {
     if (rc) {
         qDebug() << "Не удалось открыть базу данных: " << sqlite3_errmsg(db);
     } else {
-        qDebug() << "База данных успешно открыта.";
     }
 }
 

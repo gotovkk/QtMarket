@@ -19,7 +19,6 @@ void RegistrationWindow::setupDatabase() {
     if (rc) {
         qDebug() << "Не удалось открыть базу данных(RegisterUser): " << sqlite3_errmsg(db);
     } else {
-        qDebug() << "База данных успешно открыта(RegisterUser).";
     }
 }
 

@@ -66,9 +66,9 @@
   <widget class="QLineEdit" name="lineEditAmount">
    <property name="geometry">
     <rect>
-     <x>430</x>
+     <x>200</x>
      <y>290</y>
-     <width>201</width>
+     <width>431</width>
      <height>51</height>
     </rect>
    </property>
@@ -166,8 +166,8 @@
    <property name="geometry">
     <rect>
      <x>200</x>
-     <y>290</y>
-     <width>221</width>
+     <y>230</y>
+     <width>431</width>
      <height>51</height>
     </rect>
    </property>
@@ -287,6 +287,15 @@
     <string>Продукт успешно добавлен</string>
    </property>
   </widget>
+  <zorder>lineEditCategory</zorder>
+  <zorder>lineEditName</zorder>
+  <zorder>label</zorder>
+  <zorder>lineEditAmount</zorder>
+  <zorder>lineEditDescription</zorder>
+  <zorder>lineEditPrice</zorder>
+  <zorder>addProductButton</zorder>
+  <zorder>backButton</zorder>
+  <zorder>productLabel</zorder>
  </widget>
  <resources/>
  <connections/>

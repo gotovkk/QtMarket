@@ -27,6 +27,7 @@ Q_OBJECT
 
 public:
     explicit AddProduct(QWidget *parent = nullptr);
+    void populateFields(const Product &product);
 
     ~AddProduct();
 
@@ -45,6 +46,8 @@ private:
     DatabaseLoader databaseLoader;
     Storage storage;
     sqlite3 *db;
+    int currentProductId = -1;
+
 
     void setupDatabase();
 };

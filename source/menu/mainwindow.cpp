@@ -39,7 +39,6 @@ void MainWindow::setupDatabase() {
     if (rc) {
         qDebug() << "Не удалось открыть базу данных(Main): " << sqlite3_errmsg(db);
     } else {
-        qDebug() << "База данных успешно открыта(Main).";
     }
 }
 

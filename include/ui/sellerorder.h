@@ -10,6 +10,10 @@
 #include <QDateEdit>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QHeaderView>
+
+#include "../ProductListManager.h"
+#include "../../source/database/DatabaseLoader.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -25,20 +29,20 @@ public:
     explicit sellerorder(QWidget *parent = nullptr);
 
     ~sellerorder() override;
-
+    void loadOrders(sqlite3 *db,int sellerId);
+    void setupDatabase();
+    void initializeOrders();
+    void markOrderAsInProgress();
+    void markOrderAsOrdered();
 private slots:
-
     void filterOrders();
-
     void markOrderAsCompleted();
-
     void refreshOrders();
-
-    void backToSellerMenu();
+    void backToSellerButton();
+    void onStatusFilterChanged();
 
 signals:
-
-    void backToMenu();
+    void switchToSellerMenu();
 
 private:
     Ui::sellerorder *ui;
@@ -51,6 +55,11 @@ private:
     QPushButton *refreshButton;
     QPushButton *backButton;
     QPushButton *markCompletedButton;
+    QPushButton *markOrderedButton;
+    QPushButton *markInProgressButton;
+    sqlite3 *db;
+    ProductListManager<Product *> productManager;
+
 };
 
 #endif //QTHYDRAMARKET_SELLERORDER_H

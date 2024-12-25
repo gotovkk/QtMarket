@@ -143,8 +143,8 @@ QPushButton:hover {
       <rect>
        <x>10</x>
        <y>60</y>
-       <width>571</width>
-       <height>471</height>
+       <width>781</width>
+       <height>461</height>
       </rect>
      </property>
      <property name="widgetResizable">
@@ -155,30 +155,30 @@ QPushButton:hover {
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>569</width>
-        <height>469</height>
+        <width>779</width>
+        <height>459</height>
        </rect>
       </property>
       <widget class="QWidget" name="widget" native="true">
        <property name="geometry">
         <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>561</width>
-         <height>461</height>
+         <x>-390</x>
+         <y>-140</y>
+         <width>549</width>
+         <height>439</height>
         </rect>
        </property>
-       <widget class="QWidget" name="verticalLayoutWidget">
-        <property name="geometry">
-         <rect>
-          <x>9</x>
-          <y>19</y>
-          <width>551</width>
-          <height>441</height>
-         </rect>
-        </property>
-        <layout class="QVBoxLayout" name="verticalLayout"/>
-       </widget>
+      </widget>
+      <widget class="QWidget" name="verticalLayoutWidget">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>751</width>
+         <height>441</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout"/>
       </widget>
      </widget>
     </widget>
@@ -199,6 +199,40 @@ QPushButton:hover {
      </property>
      <property name="text">
       <string>Корзина товаров</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="myOrderButton">
+     <property name="geometry">
+      <rect>
+       <x>610</x>
+       <y>10</y>
+       <width>181</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">    QPushButton {
+        background-color: #313638;
+        color: white;
+        border: 1px solid #2e2e2e;
+        border-radius: 8px;
+        padding: 10px 20px;
+    }
+    QPushButton:hover {
+        border-color: #4e4e4e;
+    }
+    QPushButton:pressed {
+        background-color: #1e1e1e;
+}</string>
+     </property>
+     <property name="text">
+      <string>Мои заказы</string>
      </property>
     </widget>
    </widget>

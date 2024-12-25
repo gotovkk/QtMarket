@@ -14,38 +14,34 @@ Q_OBJECT
 public:
     explicit CartItemWidget(const QString &name, int quantity, double price, int productId, QWidget *parent = nullptr);
 
-    // Получение данных о продукте
-    double getTotalPrice() const;   // Получить общую стоимость (количество * цена за единицу)
-    QString getProductName() const; // Получить название продукта
-    int getProductId() const;       // Получить ID продукта
-    double getUnitPrice() const;    // Получить цену за единицу
-    int getQuantity() const;        // Получить текущее количество
+    double getTotalPrice() const;
+    QString getProductName() const;
+    int getProductId() const;
+    double getUnitPrice() const;
+    int getQuantity() const;
 
-    // Установка количества
     void setQuantity(int quantity);
 
 signals:
-    void removeItem(CartItemWidget *item);  // Сигнал об удалении элемента
-    void quantityChanged(double totalPrice); // Сигнал об изменении общей стоимости товара
+    void removeItem(CartItemWidget *item);
+    void quantityChanged(double totalPrice);
 
 private slots:
-    void onQuantityChanged(int newQuantity); // Обработчик изменения количества
+    void onQuantityChanged(int newQuantity);
 
 private:
-    // UI-компоненты
-    QLabel *nameLabel;         // Метка для имени продукта
-    QLabel *priceLabel;        // Метка для общей стоимости
-    QSpinBox *quantitySpinBox; // Спинбокс для изменения количества
-    QPushButton *removeButton; // Кнопка для удаления элемента
 
-    // Данные продукта
-    double pricePerUnit;       // Цена за единицу товара
-    QString productName;       // Название товара
-    int productId;             // ID продукта
-    int quantity;              // Текущее количество товара
+    QLabel *nameLabel;
+    QLabel *priceLabel;
+    QSpinBox *quantitySpinBox;
+    QPushButton *removeButton;
 
-    // Вспомогательные методы
-    void updateTotalPrice();   // Метод для обновления метки с общей стоимостью
+    double pricePerUnit;
+    QString productName;
+    int productId;
+    int quantity;
+
+    void updateTotalPrice();
 };
 
 #endif // CARTITEMWIDGET_H

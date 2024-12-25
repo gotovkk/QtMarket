@@ -29,13 +29,14 @@ void CartMenu::setupDatabase() {
     if (rc) {
         qDebug() << "Не удалось открыть базу данных: " << sqlite3_errmsg(db);
     } else {
-        qDebug() << "База данных успешно открыта.";
     }
 }
 
 void CartMenu::onBackToShoppingClicked() {
     emit backToShopping();
 }
+
+
 
 void CartMenu::addProductToCart(const QString &name, int quantity, double price, int productId) {
     for (CartItemWidget *existingItem: cart->getItems()) {
@@ -173,7 +174,7 @@ void CartMenu::createOrder() {
 
     int buyerId = SessionManager::getCurrentUserId();
     sqlite3_bind_int(stmt, 1, buyerId);
-    sqlite3_bind_text(stmt, 2, "В процессе", -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 2, "Оформлен", -1, SQLITE_STATIC);
     sqlite3_bind_double(stmt, 3, totalPrice);
 
     if (sqlite3_step(stmt) != SQLITE_DONE) {
@@ -297,4 +298,18 @@ void CartMenu::clearCartFromDatabase() {
 
         sqlite3_finalize(stmt);
     }
+}
+
+void CartMenu::on_myOrderButton_clicked() {
+    ordersWindow = new buyerOrders;
+    connect(ordersWindow, &buyerOrders::switchToCartMenu, this, &CartMenu::onBackToCartMenu);
+    this->hide();
+    emit switchToOrderPage();
+    ordersWindow->show();
+}
+
+void CartMenu::onBackToCartMenu() {
+    ordersWindow->hide();
+    this->show();
+
 }

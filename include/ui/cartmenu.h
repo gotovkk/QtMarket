@@ -13,7 +13,7 @@
 #include "../../source/database/CartDatabase.h"
 #include "../../source/exception/Exceptions.h"
 #include "../../source/report/reportpage.h"
-
+#include "buyerorders.h"
 
 namespace Ui {
     class CartMenu;
@@ -56,13 +56,16 @@ signals:
 
     void backToShopping();
 
+    void switchToOrderPage();
 
 private slots:
 
     void onBackToShoppingClicked();
+    void onBackToCartMenu();
+
 
     void createOrder();
-
+    void on_myOrderButton_clicked();
 private:
     void addProductToOrder(int orderId, CartItemWidget *item);
 
@@ -70,6 +73,7 @@ private:
     QVBoxLayout *itemsLayout;
     CartDatabase *cartDatabase;
     ProductListManager<CartItemWidget *> *cart;
+    buyerOrders *ordersWindow;
 
 
     sqlite3 *db;

@@ -16,7 +16,6 @@ void RegisterSeller::setupDatabase() {
     if (rc) {
         qDebug() << "Не удалось открыть базу данных(RegisterSellerMenu): " << sqlite3_errmsg(db);
     } else {
-        qDebug() << "База данных успешно открыта.(RegisterSellerMenu)";
     }
 }
 

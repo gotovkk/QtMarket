@@ -9,15 +9,10 @@ SellerMenu::SellerMenu(QWidget *parent) : QWidget(parent), ui(new Ui::SellerMenu
     report = new reportpage;
     addProductWindow = new AddProduct;
     backToBuyersWindow = new AddProduct;
-
     report->hide();
-
-    connect(ui->orderButton, &QPushButton::clicked, this, &SellerMenu::openSellerOrder);
-    connect(orderWindow, &sellerorder::backToMenu, this, &SellerMenu::onBackToSellerMenu);
     connect(addProductWindow, &AddProduct::addProductWindow, this, &SellerMenu::show);
     connect(backToBuyersWindow, &AddProduct::addProductWindow, this, &SellerMenu::show);
     connect(report, &reportpage::switchToSellerMenu, this, &SellerMenu::onBackFromReportPage);
-
 
     setupDatabase();
 }
@@ -28,22 +23,29 @@ void SellerMenu::onBackFromReportPage() {
 
     this->show();
 }
+void SellerMenu::onBackToSellerMenu() {
+    orderWindow->hide();
+    this->show();
+
+}
+
 
 SellerMenu::~SellerMenu() {
     delete ui;
     sqlite3_close(db);
 }
 
-void SellerMenu::openSellerOrder() {
-
-    orderWindow->show();
+void SellerMenu::on_reportButton_clicked() {
+    emit switchToReportPage();
+    report->show();
 }
 
-void SellerMenu::on_reportButton_clicked() {
-    qDebug() << "Кнопка reportButton нажата!";
-    emit switchToReportPage();
-//    this->hide();
-    report->show();
+void SellerMenu::on_orderButton_clicked() {
+    orderWindow = new sellerorder;
+    connect(orderWindow, &sellerorder::switchToSellerMenu, this, &SellerMenu::onBackToSellerMenu);
+    this->hide();
+    emit switchToSellerPage();
+    orderWindow->show();
 }
 
 void SellerMenu::setupDatabase() {
@@ -51,7 +53,6 @@ void SellerMenu::setupDatabase() {
     if (rc != SQLITE_OK) {
         qDebug() << "Не удалось открыть базу данных: " << sqlite3_errmsg(db);
     } else {
-        qDebug() << "База данных успешно открыта.";
     }
 }
 
@@ -71,12 +72,10 @@ void SellerMenu::loadProducts(sqlite3 *db, int id) {
     sqlite3_stmt *stmt;
 
     if (sqlite3_prepare_v2(db, sqlSelect.c_str(), -1, &stmt, nullptr) != SQLITE_OK) {
-        qDebug() << "Ошибка при подготовке SQL-запроса: " << sqlite3_errmsg(db);
         return;
     }
 
     if (sqlite3_bind_int64(stmt, 1, sellerId) != SQLITE_OK) {
-        qDebug() << "Ошибка при привязке параметра sellerId: " << sqlite3_errmsg(db);
     }
     while (sqlite3_step(stmt) == SQLITE_ROW) {
         int id = sqlite3_column_int(stmt, 0);
@@ -98,7 +97,6 @@ void SellerMenu::loadProducts(sqlite3 *db, int id) {
     }
 
     if (sqlite3_finalize(stmt) != SQLITE_OK) {
-        qDebug() << "Ошибка при завершении SQL-запроса: " << sqlite3_errmsg(db);
     }
     ui->scrollArea->update();
 
@@ -108,7 +106,6 @@ void SellerMenu::loadProducts(sqlite3 *db, int id) {
 }
 
 void SellerMenu::displaySortedProducts() {
-    qDebug() << "Отображение продуктов. Количество товаров:" << productManager.getItems().size();
 
     delete ui->scrollArea->widget();
 
@@ -124,6 +121,8 @@ void SellerMenu::displaySortedProducts() {
         productWidget->setPageForRole(true);
         productWidget->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
         productWidget->setMinimumHeight(250);
+
+        connect(productWidget, &ProductItemWidget::updateItem, this, &SellerMenu::onUpdateProduct);
 
         connect(productWidget, &ProductItemWidget::deleteItem, [this, productWidget, product](int productId) {
             this->onDeleteItem(productId, productWidget);
@@ -141,8 +140,8 @@ void SellerMenu::displaySortedProducts() {
 
     ui->scrollArea->setWidget(container);
     ui->scrollArea->update();
-
 }
+
 
 void SellerMenu::onDeleteItem(int productId, ProductItemWidget *productWidget) {
     if (productId == -1) {
@@ -165,7 +164,6 @@ void SellerMenu::onDeleteItem(int productId, ProductItemWidget *productWidget) {
     }
 
     if (sqlite3_step(stmt) == SQLITE_DONE) {
-        qDebug() << "Товар с ID " << productId << " успешно удалён из базы данных.";
     } else {
         qDebug() << "Ошибка при выполнении SQL-запроса: " << sqlite3_errmsg(db);
     }
@@ -201,19 +199,10 @@ void SellerMenu::on_addProductButton_clicked() {
     this->close();
 }
 
-void SellerMenu::onBackToSellerMenu() {
-    qDebug() << "Вернулись в меню продавца, скрываем окно заказов и показываем кнопки.";
+void SellerMenu::onUpdateProduct(const Product &product) {
+    qDebug() << "Обновление товара с ID:" << product.getId();
 
-    if (orderWindow) {
-        qDebug() << "Скрываем окно заказов.";
-        orderWindow->hide();
-    }
-
-    ui->orderButton->setVisible(true);
-    ui->addProductButton->setVisible(true);
-    ui->reportButton->setVisible(true);
-
-    qDebug() << "Показаны кнопки меню продавца.";
-
-    this->setVisible(true);
+    addProductWindow->populateFields(product);
+    addProductWindow->show();
+    this->close();
 }

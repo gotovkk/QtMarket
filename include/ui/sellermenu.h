@@ -45,7 +45,7 @@ public:
     void loadProducts(sqlite3 *db, int id);
 
     void displaySortedProducts();
-    void openSellerOrder();
+
 
 private slots:
 
@@ -57,10 +57,14 @@ private slots:
 
     void on_reportButton_clicked();
 
-    void onBackToSellerMenu();
 
+    void onUpdateProduct(const Product &product);
 
     void onBackFromReportPage();
+
+    void on_orderButton_clicked();
+
+    void onBackToSellerMenu();  // слот для возврата в меню
 
 signals:
 
@@ -68,6 +72,7 @@ signals:
 
     void switchToReportPage();
 
+    void switchToSellerPage();
 
 private:
     Ui::SellerMenu *ui;
